@@ -1,0 +1,59 @@
+import { getModelForClass, modelOptions, pre, prop } from "@typegoose/typegoose";
+
+
+export interface UserJWT{
+    userId: number,
+    name: string,
+    role: string,
+    iat: number,
+    exp: number,
+    iss:string,
+    sub: string,
+
+}
+
+
+@pre<Movie>("save", function () {
+    const date = new Date(this.Released);
+    this.Released = date.toString();
+}
+
+)
+
+@modelOptions({
+    schemaOptions: {
+        timestamps: true,
+    },
+})
+export class Movie {
+
+    @prop({
+        required: true
+    })
+    Title: string;
+
+    @prop({
+        required: true
+    })
+    Director: string;
+
+    @prop({
+        required: true
+    })
+    Released: string;
+
+    @prop({
+        required: true
+    })
+    Genre: string;
+
+    @prop({
+        // required: true
+    })
+    AddedBy: string;
+    // AddedBy: { type: String, required:true},
+
+}
+
+const MovieModel = getModelForClass(Movie);
+export default MovieModel;
