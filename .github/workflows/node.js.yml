@@ -34,5 +34,5 @@ jobs:
     - run: npm run build --DB_URI='mongodb://localhost:27017/moviesDb' --if-present
       working-directory: ./movies
     
-    - run: npm run test --if-present
+    - run: npm run test --DB_URI='mongodb://localhost:27017/moviesDb' --if-present
       working-directory: ./movies
