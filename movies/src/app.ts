@@ -30,7 +30,6 @@ app.listen(port, () => {
 
     swaggerDocs(app, port)
 
-    console.log(!!"false");
 })
 
 
