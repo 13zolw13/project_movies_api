@@ -13,7 +13,7 @@ const app = express();
 
 
 const port = Number(process.env.PORT) || 3001;
-
+const dbUri = <string>process.env.DB_URI;
 
 app.use(express.json());
 
@@ -25,7 +25,7 @@ app.get('/swagger.json', (req: Request, res: Response) => {
     res.send(specs);
 });
 app.listen(port, () => {
-    connectDb();
+    connectDb(dbUri);
     console.log(`app is running ${port}`);
 
     swaggerDocs(app, port)
