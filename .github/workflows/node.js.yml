@@ -26,10 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-      working-directory: ./authentication 
-    - run: npm run build  --if-present
-      working-directory: ./authentication
-    - run: npm install
       working-directory: ./movies 
     - run: npm run build --DB_URI='mongodb://localhost:27017/moviesDb' --if-present
       working-directory: ./movies
