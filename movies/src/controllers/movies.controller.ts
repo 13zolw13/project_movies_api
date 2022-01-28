@@ -42,9 +42,9 @@ export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
         const movie = await MovieModel.create({ ...movieData, AddedBy: User.userId });
         // , 
 
-        return res.status(200).send({ msg: 'Movie succesfully added to db', movie })
+        return res.status(201).send({ msg: 'Movie succesfully added to db', movie })
     }
-    return res.status(400).send('Cannot be added');
+    return res.status(400).send({ msg: 'Cannot be added'});
 }
 
 
