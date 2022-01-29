@@ -20,14 +20,16 @@ services:
       JWT_SECRET: 'blabla'
   movies:
     build:
-      context: .
-      dockerfile: ./movies/Dockerfile
+        context: ./movies
+        dockerfile: Dockerfile
+      # context: .
+      # dockerfile: ./movies/Dockerfile
     ports:
       - published: ${APP_PORT:-3001}
         target: 3001
     volumes:
       - .:/movies
     command: npm run dev
-    # environment:
-    #   JWT_SECRET: 'blabla'
-    #   DB_URI: mongodb://mongo:27017/movies
+    environment:
+      JWT_SECRET: 'blabla'
+      DB_URI: mongodb://mongo:27017/movies
