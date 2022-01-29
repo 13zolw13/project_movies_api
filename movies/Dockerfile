@@ -1,7 +1,7 @@
 FROM node:14.15-alpine
 WORKDIR  /movies
-COPY ./ ./
 
+COPY package*.json ./
 RUN npm install
 
 
