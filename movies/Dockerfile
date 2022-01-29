@@ -1,11 +1,10 @@
 FROM node:14.15-alpine
 WORKDIR  /movies
-# COPY package*.json .
-# # RUN npm install
+COPY ./package*.json ./
+RUN npm install
 
 
-COPY  /package.json ./
-
+COPY ./ ./
 
 RUN npm install
 CMD ["npm", "run dev"]
