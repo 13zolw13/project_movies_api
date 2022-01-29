@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker-compoose build . --file docker-compose --tag my-image-name:$(date +%s)
+      run: docker-compoose up . --file docker-compose --tag my-image-name:$(date +%s)
