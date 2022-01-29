@@ -9,8 +9,8 @@ services:
   auth:
     command: node authentication/src/server.js
     build:
-      context: .
-      dockerfile: ./authentication/Dockerfile
+      context: ./movies
+      dockerfile: Dockerfile
     ports:
       - published: ${APP_PORT:-3000}
         target: 3000
