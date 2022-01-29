@@ -1,7 +1,8 @@
 FROM node:14.15-alpine
-WORKDIR  /app
+WORKDIR  /
 COPY ./package*.json ./
 RUN npm install
+RUN npx tsc 
 
 
 
