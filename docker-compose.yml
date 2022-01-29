@@ -1,23 +1,23 @@
 version: "3.2"
 services:
-  # mongo:
-  #   image: mongo
-  #   restart: always
-  #   ports:
-  #     - '27017:27017'
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
 
-  # auth:
-  #   command: node authentication/src/server.js
-  #   build:
-  #     context: .
-  #     dockerfile: /authentication/Dockerfile
-  #   ports:
-  #     - published: ${APP_PORT:-3000}
-  #       target: 3000
-  #   volumes:
-  #     - .:/authentication
-  #   environment:
-  #     JWT_SECRET: 'blabla'
+  auth:
+    command: node authentication/src/server.js
+    build:
+      context: .
+      dockerfile: ./authentication/Dockerfile
+    ports:
+      - published: ${APP_PORT:-3000}
+        target: 3000
+    volumes:
+      - .:/authentication
+    environment:
+      JWT_SECRET: 'blabla'
   movies:
     build:
       context: .

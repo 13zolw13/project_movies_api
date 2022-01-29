@@ -4,7 +4,7 @@ WORKDIR  /movies
 # # RUN npm install
 
 
-COPY ./movies/package.json ./
+COPY  /package.json ./
 
 
 RUN npm install
