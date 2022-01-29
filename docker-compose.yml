@@ -9,7 +9,7 @@ services:
   auth:
     command: node authentication/src/server.js
     build:
-      context: ./movies
+      context: ./authentication
       dockerfile: Dockerfile
     ports:
       - published: ${APP_PORT:-3000}
