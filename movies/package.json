@@ -6,8 +6,6 @@
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.test.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
-    
-
   },
   "keywords": [],
   "author": "",

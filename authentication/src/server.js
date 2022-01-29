@@ -1,11 +1,10 @@
-require('dotenv').config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const { authFactory, AuthError } = require("./auth");
 
-const PORT = 3003;
-const { JWT_SECRET } = process.env|| 'secret';
+const PORT = 3000;
+const  JWT_SECRET  ="blabla";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET env var. Set it and restart the server");
@@ -15,6 +14,10 @@ const auth = authFactory(JWT_SECRET);
 const app = express();
 
 app.use(bodyParser.json());
+
+app.get('/helthcheck', (req, res) => {
+  res.send('hello!')
+})
 
 app.post("/auth", (req, res, next) => {
   if (!req.body) {

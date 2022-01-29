@@ -35,6 +35,11 @@ describe('MovieModel', () => {
                 chai.request(app)
                     .get('/api/v1/movies')
                     .end((err, res) => {
+                        if (err) {
+                            console.error(err);
+                            done();
+
+                        }
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         res.body.movies.should.be.a('array');
@@ -62,6 +67,8 @@ describe('MovieModel', () => {
                 .end((err, res) => {
                     if (err) {
                         console.error(err);
+                        done();
+
                     }
                     res.should.have.status(201);
 
@@ -120,6 +127,7 @@ describe('MovieModel', () => {
                 .end((err, res) => {
                     if (err) {
                         console.error(err);
+                        done();
                     }
                     res.should.have.status(400);
 
@@ -128,6 +136,5 @@ describe('MovieModel', () => {
         })
     })
 
-
-
+    
 });

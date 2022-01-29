@@ -13,7 +13,7 @@ const app = express();
 
 
 const port = Number(process.env.PORT) || 3001;
-const dbUri = 'mongodb://localhost:27017/moviesDb';
+const dbUri = process.env.DB_URI!;
 
 app.use(express.json());
 

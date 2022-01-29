@@ -22,7 +22,7 @@ export function getAllMovies() {
 
 
 export async function getAuthUser(username: string, password: string) {
-    const url = 'http://localhost:3003/auth';
+    const url = 'http://localhost:3000/auth';
 
     try {
         return await axios.post(url, { username: username, password: password });

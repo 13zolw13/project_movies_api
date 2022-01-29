@@ -1,6 +1,11 @@
-FROM node:alpine
-WORKDIR /app
-COPY package.json ./
+FROM node:14.15-alpine
+WORKDIR  /movies
+# COPY package*.json .
+# # RUN npm install
+
+
+COPY ./movies/package.json ./
+
+
 RUN npm install
-COPY ./ ./
-CMD ["npm", "start"]
+CMD ["npm", "run dev"]
