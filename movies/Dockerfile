@@ -7,4 +7,4 @@ RUN npm install
 COPY ./ ./
 
 
-CMD ["node", "/src/app.ts"]
+CMD ["npm", "run", "dev"]
