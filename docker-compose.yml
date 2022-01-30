@@ -19,7 +19,7 @@ services:
     networks:
       - my-network
     volumes:
-      - :/authentication
+      - .:/authentication
     environment:
       JWT_SECRET: 'blabla'
 
@@ -39,7 +39,7 @@ services:
     networks:
       - my-network
     volumes:
-      - :/movies:/movies
+      - .:/movies
     depends_on:
       - auth
     environment:
