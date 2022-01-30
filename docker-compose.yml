@@ -4,30 +4,45 @@ services:
     image: mongo
     restart: always
     ports:
-      - '27017:27017'
-   
+      - '27018:27018'
+    networks:
+      - my-network
 
   auth:
+    container_name: auth
     # command: node authentication/src/server.js
     build:
       context: ./authentication
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    networks:
+      - my-network
     volumes:
       - .:/authentication
     environment:
       JWT_SECRET: 'blabla'
   movies:
+    container_name: movies
     build:
       context: ./movies
       dockerfile: Dockerfile
     # context: .
+
+
+
     # dockerfile: ./movies/Dockerfile
     ports:
       - 3001:3001
+    networks:
+      - my-network
     volumes:
       - ./movies:/movies
     environment:
       JWT_SECRET: 'blabla'
-      DB_URI: mongodb://mongo:27017/movies
+      DB_URI: mongodb://mongo:27018/movies
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      driver: default

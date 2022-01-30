@@ -22,11 +22,11 @@ export function getAllMovies() {
 
 
 export async function getAuthUser(username: string, password: string) {
-    const url = 'http://localhost:3000/auth';
+    const url = 'http://auth:3000/auth';
 
     try {
         return await axios.post(url, { username: username, password: password });
-    } catch (error:any) {
+    } catch (error: any) {
         console.error(error);
         return;
     }
