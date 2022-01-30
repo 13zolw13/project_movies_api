@@ -7,4 +7,4 @@ RUN npm install
 
 
 
-CMD ["npm", "run", "dev"]
+CMD ["node", "./src/app.js"]
