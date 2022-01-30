@@ -16,6 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run:  docker-compose up
-      env:
-      OMDB_KEY=${{secrets.OMDB_KEY}}
+      run:  OMDB_KEY=${{secrets.OMDB_KEY}} docker-compose up
+      
+     
