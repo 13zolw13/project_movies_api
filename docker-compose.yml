@@ -29,7 +29,8 @@ services:
         target: 3001
     volumes:
       - ./src:/movies/src
-    command: npm run dev
+    command: ls
+    # command: npm run dev
     environment:
       JWT_SECRET: 'blabla'
       DB_URI: mongodb://mongo:27017/movies
