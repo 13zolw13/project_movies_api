@@ -10,13 +10,18 @@ on:
 jobs:
 
   build:
+    
+    runs-on: ubuntu-latest
+    
     env: 
      OMDB_KEY: ${{secrets.OMDB_KEY}}
-    runs-on: ubuntu-latest
-   
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker-compose up
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check logs
+      run: docker logs backend
       
      
