@@ -19,7 +19,7 @@ export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
 
     const data = await getAuthUser(username, password);
     if (!data) {
-        return res.status(400).send('User not authorized');
+        return res.status(404).send('User not authorized');
     }
     const User = encodedUser(data.data.token) as JwtPayload
   
