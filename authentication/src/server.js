@@ -15,7 +15,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/helthcheck', (req, res) => {
+app.get('/healthcheck', (req, res) => {
   res.send('hello!')
 })
 

@@ -47,7 +47,4 @@ export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
     return res.status(400).send({ msg: 'Cannot be added'});
 }
 
-
-// module.exports = {
-//     listOfAllMovies,addMovie
-// }
+ 

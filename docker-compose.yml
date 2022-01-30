@@ -13,8 +13,7 @@ services:
       context: ./authentication
       dockerfile: Dockerfile
     ports:
-      - published: ${APP_PORT:-3000}
-        target: 3000
+      - 3000:3000
     volumes:
       - .:/authentication
     environment:
@@ -24,25 +23,9 @@ services:
       context: ./movies
       dockerfile: Dockerfile
     # context: .
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # dockerfile: ./movies/Dockerfile
     ports:
-      - published: ${APP_PORT:-3001}
-        target: 3001
+      - 3001:3001
     volumes:
       - ./movies:/movies
     environment:
