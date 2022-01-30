@@ -29,8 +29,8 @@ services:
       - published: ${APP_PORT:-3001}
         target: 3001
     volumes:
-      - ./src:/movies/src
-    command: cd movies | npm run dev
+      - ./movies/src
+   
     environment:
       JWT_SECRET: 'blabla'
       DB_URI: mongodb://mongo:27017/movies
