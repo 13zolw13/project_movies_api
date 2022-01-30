@@ -28,7 +28,7 @@ services:
       - published: ${APP_PORT:-3001}
         target: 3001
     volumes:
-      - .:/movies
+      - ./src:/movies/src
     command: npm run dev
     environment:
       JWT_SECRET: 'blabla'
