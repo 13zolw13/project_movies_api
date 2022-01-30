@@ -39,7 +39,7 @@ services:
     networks:
       - my-network
     volumes:
-      - ./movies:/movies
+      - .:/movies:/movies
     depends_on:
       - auth
     environment:
