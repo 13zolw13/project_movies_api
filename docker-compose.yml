@@ -5,6 +5,7 @@ services:
     restart: always
     ports:
       - '27017:27017'
+    volumes: -mongodb:/data/db
 
   auth:
     # command: node authentication/src/server.js
@@ -23,6 +24,18 @@ services:
       context: ./movies
       dockerfile: Dockerfile
     # context: .
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
