@@ -34,4 +34,4 @@ services:
       - ./movies:/movies
     environment:
       JWT_SECRET: 'blabla'
-      # DB_URI: mongodb://mongo:27017/movies
+      DB_URI: mongodb://mongo:27017/movies
