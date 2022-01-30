@@ -72,7 +72,7 @@ describe('MovieModel', () => {
                         done();
 
                     }
-                    res.should.have.status(401);
+                    res.should.have.status(404);
 
                     done();
                 });
