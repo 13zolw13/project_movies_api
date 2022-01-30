@@ -53,6 +53,32 @@ describe('MovieModel', () => {
 
     });
 
+
+
+    describe('/POST Adding new film ', () => {
+        it('it should not add a movie -not auth user', (done) => {
+            const data = {
+                username: 'premium-jim',
+                password: 'GBLtTyq3E_dsado9m6',
+                title: 'Pulp',
+            } as AddMovieInput
+
+            chai.request(app)
+                .post('/api/v1/movies')
+                .send(data)
+                .end((err, res) => {
+                    if (err) {
+                        console.error(err);
+                        done();
+
+                    }
+                    res.should.have.status(404);
+
+                    done();
+                });
+        })
+    })
+
     describe('/POST Adding new film ', () => {
         it('it should add  new movie', (done) => {
             const data = {
@@ -136,5 +162,5 @@ describe('MovieModel', () => {
         })
     })
 
-    
+
 });

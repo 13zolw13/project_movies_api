@@ -9,7 +9,7 @@ const { getMovie, getAllMovies } = require('../services/movies.services')
 export async function listOfAllMovies(req: Request, res: Response) {
     const movies = await getAllMovies();
     if (!movies) {
-        return res.status(404).send('No movies in DB');
+        return res.status(400).send('No movies in DB');
     }
     return res.status(200).send({ msg: 'List of all movies', movies });
 }
@@ -19,7 +19,7 @@ export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
 
     const data = await getAuthUser(username, password);
     if (!data) {
-        return res.status(404).send('User not authorized');
+        return res.status(400).send('User not authorized');
     }
     const User = encodedUser(data.data.token) as JwtPayload
   
@@ -33,11 +33,11 @@ export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
 
 
         if (!title) {
-            return res.status(404).send('No title given');
+            return res.status(400).send('No title given');
         }
         const movieData = await getMovie(title);
         if (!movieData) {
-            return res.status(404).send('No movie data ');
+            return res.status(400).send('No movie data ');
         }
         const movie = await MovieModel.create({ ...movieData, AddedBy: User.userId });
         // , 
