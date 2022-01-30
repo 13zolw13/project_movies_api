@@ -1,10 +1,10 @@
 version: "3.2"
 services:
-  mongo:
-    image: mongo
-    restart: always
-    ports:
-      - '27017:27017'
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - '27017:27017'
 
   auth:
     # command: node authentication/src/server.js
@@ -34,4 +34,4 @@ services:
       - ./movies:/movies
     environment:
       JWT_SECRET: 'blabla'
-      DB_URI: mongodb://mongo:27017/movies
+      # DB_URI: mongodb://mongo:27017/movies
