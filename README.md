@@ -1,0 +1,1 @@
+To run this app set .env file with 

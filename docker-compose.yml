@@ -45,6 +45,7 @@ services:
     environment:
       JWT_SECRET: 'blabla'
       DB_URI: mongodb://mongo:27017/moviesDb
+      
 networks:
   my-network:
     driver: bridge
