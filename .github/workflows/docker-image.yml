@@ -10,12 +10,13 @@ on:
 jobs:
 
   build:
-
+    env: 
+     OMDB_KEY: ${{secrets.OMDB_KEY}}
     runs-on: ubuntu-latest
    
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run:  OMDB_KEY=${{secrets.OMDB_KEY}} docker-compose up
+      run: docker-compose up
       
      
