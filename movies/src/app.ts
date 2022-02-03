@@ -10,13 +10,14 @@ import Routes from './routes/index.routes';
 import specs from './utils/swagger';
 import swaggerDocs from './utils/swagger';
 import cors from 'cors';
+import config from 'config';
 const app = express();
 
 
 
 
-const port = Number(process.env.PORT) || 3001;
-const dbUri = process.env.DB_URI || 'mongodb://localhost:27017/movieDb';
+const port =<number>config.get('port');
+const dbUri = <string>config.get("dbUri");
 
 app.use(express.json());
 app.use(cors());

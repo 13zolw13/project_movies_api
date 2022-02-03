@@ -1,11 +1,13 @@
 import axios from 'axios';
+import config from 'config';
 import jwt from 'jsonwebtoken';
 import MovieModel from '../models/movie.models';
 
 const hideDetials = '-_id -__v -createdAt -updatedAt';
 
 export async function getMovie(title: string) {
-    const url = 'https://www.omdbapi.com/?t=' + title + '&apikey=' + process.env.OMDB_KEY
+    const apikey = config.get("omdb_key");
+    const url = 'https://www.omdbapi.com/?t=' + title + '&apikey=' +  apikey;
     try {
         const {
             data: movieInfo
