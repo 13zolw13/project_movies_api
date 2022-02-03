@@ -4,7 +4,9 @@ import MovieModel from '../models/movie.models';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
-import { AddMovieInput } from "../schemas/movie.schema";
+import {
+    AddMovieInput
+} from "../schemas/movie.schema";
 
 export const should = chai.should();
 
@@ -62,6 +64,7 @@ describe('MovieModel', () => {
                 password: 'GBLtTyq3E_dsado9m6',
                 title: 'Pulp',
             } as AddMovieInput
+           
 
             chai.request(app)
                 .post('/api/v1/movies')
@@ -85,7 +88,8 @@ describe('MovieModel', () => {
                 username: 'premium-jim',
                 password: 'GBLtTyq3E_UNjFnpo9m6',
                 title: 'Pulp',
-            } as AddMovieInput
+            }  as AddMovieInput
+          
 
             chai.request(app)
                 .post('/api/v1/movies')
@@ -109,6 +113,7 @@ describe('MovieModel', () => {
                 password: "sR-_pcoow-27-6PAwCD8",
                 title: 'Pulp',
             } as AddMovieInput
+           
             let movie = MovieModel.insertMany([{
                 Title: "Pulp fiction",
                 Released: "14 OCT 1994",
@@ -144,7 +149,7 @@ describe('MovieModel', () => {
                 Director: "Quentin Tarantino",
                 AddedBy: 123,
 
-            },])
+            }, ])
 
 
             chai.request(app)

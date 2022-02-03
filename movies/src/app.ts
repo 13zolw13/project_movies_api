@@ -1,7 +1,10 @@
 require('dotenv').config()
 
 import swaggerUI from 'swagger-ui-express';
-import express, { Request, Response } from "express";
+import express, {
+    Request,
+    Response
+} from "express";
 import connectDb from "./utils/connectToDb";
 import moviesRoutes from './routes/movies.routes';
 import specs from './utils/swagger';
