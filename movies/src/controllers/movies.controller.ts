@@ -12,13 +12,11 @@ import {
 import {
     checkHowManyAdded,
     encodedUser,
-    getAuthUser
+    getAuthUser, getAllMovies
 } from "../services/movies.services";
+import { getMovie } from "../services/omdbApi.services";
 
-const {
-    getMovie,
-    getAllMovies
-} = require('../services/movies.services')
+
 
 export async function listOfAllMovies(req: Request, res: Response) {
     const movies = await getAllMovies();

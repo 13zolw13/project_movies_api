@@ -5,25 +5,7 @@ import MovieModel from '../models/movie.models';
 
 const hideDetials = '-_id -__v -createdAt -updatedAt';
 
-export async function getMovie(title: string) {
-    const apikey = config.get("omdb_key");
-    const url = 'https://www.omdbapi.com/?t=' + title + '&apikey=' +  apikey;
-    try {
-        const {
-            data: movieInfo
-        } = await axios.get(url)
-        const movie = {
-            Title: movieInfo.Title,
-            Director: movieInfo.Director,
-            Genre: movieInfo.Genre,
-            Released: movieInfo.Released
-        }
-        return movie
-    } catch (error) {
-        console.error(error);
-        return;
-    }
-}
+
 
 export function getAllMovies() {
     return MovieModel.find({}).select(hideDetials)
@@ -55,7 +37,7 @@ export function encodedUser(token: string) {
     return data;
 }
 
-export async function checkHowManyAdded(userId: string): Promise < boolean > {
+export async function checkHowManyAdded(userId: string): Promise<boolean> {
     let date = new Date();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
