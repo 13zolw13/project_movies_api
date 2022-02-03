@@ -1,10 +1,6 @@
 import axios from 'axios';
-import jwt, {
-    JwtPayload
-} from 'jsonwebtoken';
-import MovieModel, {
-    UserJWT
-} from '../models/movie.models';
+import jwt from 'jsonwebtoken';
+import MovieModel from '../models/movie.models';
 
 const hideDetials = '-_id -__v -createdAt -updatedAt';
 
