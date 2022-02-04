@@ -44,7 +44,7 @@ services:
       - auth
     environment:
       JWT_SECRET: 'blabla'
-      DB_URI: mongodb://mongo:27017/moviesDb
+      DB_URI: 'mongodb://mongo:27017/moviesDb'
       # OMDB_KEY: ${OMDB_KEY} for run in github action. locally from env.
 networks:
   my-network:

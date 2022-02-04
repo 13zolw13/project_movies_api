@@ -3,23 +3,27 @@ import config from 'config';
 import jwt from 'jsonwebtoken';
 import MovieModel from '../models/movie.models';
 
-const hideDetials = '-_id -__v -createdAt -updatedAt';
+const hideDetials = '-_id -__v -createdAt -updatedAt -Plot -Actors -Runtime -Awards';
 
 
-
-export function getAllMovies() {
-    return MovieModel.find({}).select(hideDetials)
+export function getAllMovies(userId: string) {
+    return MovieModel.find({ AddedBy: userId }) //.select(hideDetials)
 }
 
+export function findMovieById(movieId: string) {
+    return MovieModel.find({ _id: movieId }) //.select(hideDetials);
+}
 
 export async function getAuthUser(username: string, password: string) {
-    const url = 'http://auth:3000/auth';
-
+    const url = config.get<string>('authServiceURL');
+    console.log('url auth service', url);
     try {
-        return await axios.post(url, {
+        const data = await axios.post(url, {
             username: username,
             password: password
         });
+        console.log('data getAuth', data.data);
+        return data;
     } catch (error: any) {
         console.error(error);
         return;
@@ -27,15 +31,6 @@ export async function getAuthUser(username: string, password: string) {
 }
 
 
-export function encodedUser(token: string) {
-    const key = process.env.JWT_SECRET
-    const data = jwt.verify(token, key!)
-    if (!data) {
-        return;
-    }
-
-    return data;
-}
 
 export async function checkHowManyAdded(userId: string): Promise<boolean> {
     let date = new Date();

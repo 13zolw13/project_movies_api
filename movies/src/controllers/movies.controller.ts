@@ -11,15 +11,18 @@ import {
 } from "../schemas/movie.schema";
 import {
     checkHowManyAdded,
-    encodedUser,
-    getAuthUser, getAllMovies
+
+    getAuthUser, getAllMovies, findMovieById
 } from "../services/movies.services";
 import { getMovie } from "../services/omdbApi.services";
+import { encodedUser } from "../utils/jwt";
 
 
 
 export async function listOfAllMovies(req: Request, res: Response) {
-    const movies = await getAllMovies();
+    const userId = '123'
+    const movies = await getAllMovies(userId);
+
     if (!movies) {
         return res.status(400).send('No movies in DB');
     }
@@ -29,7 +32,22 @@ export async function listOfAllMovies(req: Request, res: Response) {
     });
 }
 
-export async function addMovie(req: Request < {}, AddMovieInput > , res: Response) {
+export async function movieDetails(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const movie = await findMovieById(id);
+    if (!movie) {
+        return res.status(400).send('No movies in DB');
+    }
+    return res.status(200).send({
+        msg: 'Details of this movie',
+        movie
+    });
+}
+
+
+
+export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
     const {
         title,
         username,
@@ -40,8 +58,8 @@ export async function addMovie(req: Request < {}, AddMovieInput > , res: Respons
     if (!data) {
         return res.status(404).send('User not authorized');
     }
-    const User = encodedUser(data.data.token) as JwtPayload
-
+    const User = await encodedUser(data.data.token) as JwtPayload
+    console.log('Encoded User info', User)
     if (!User) {
         return res.status(404).send('User not authorized');
     }

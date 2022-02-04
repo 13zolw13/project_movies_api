@@ -12,9 +12,13 @@ export async function getMovie(title: string) {
         } = await axios.get(url)
         const movie = {
             Title: movieInfo.Title,
+            Actors:movieInfo.Actors,
             Director: movieInfo.Director,
             Genre: movieInfo.Genre,
-            Released: movieInfo.Released
+            Released: movieInfo.Released,
+            Plot: movieInfo.Plot,
+            Runtime: movieInfo.Runtime,
+            Awards: movieInfo.Awards
         }
         return movie
     } catch (error) {

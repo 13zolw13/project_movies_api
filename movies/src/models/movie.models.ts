@@ -1,13 +1,13 @@
 import { getModelForClass, modelOptions, pre, prop } from "@typegoose/typegoose";
 
 
-export interface UserJWT{
+export interface UserJWT {
     userId: number,
     name: string,
     role: string,
     iat: number,
     exp: number,
-    iss:string,
+    iss: string,
     sub: string,
 
 }
@@ -48,10 +48,22 @@ export class Movie {
     Genre: string;
 
     @prop({
-        // required: true
+        required: true
     })
     AddedBy: string;
-    // AddedBy: { type: String, required:true},
+
+    @prop({})
+    Plot: string;
+
+    @prop({})
+    Actors: string;
+    
+    @prop({})
+    Runtime: string;
+    
+    @prop({})
+    Awards: string;
+    
 
 }
 

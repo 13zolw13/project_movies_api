@@ -1,4 +1,4 @@
-import { addMovie, listOfAllMovies } from "../controllers/movies.controller";
+import { addMovie, listOfAllMovies, movieDetails } from "../controllers/movies.controller";
 
 const express = require("express");
 
@@ -33,6 +33,11 @@ const router = express.Router()
  *            
  */
 router.get('/v1/movies', listOfAllMovies);
+
+router.get('/v1/movies/:id', movieDetails);
+
+
+
 /**
  *  @openapi
  *  /api/v1/movies:
