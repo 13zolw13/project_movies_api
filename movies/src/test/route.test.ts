@@ -23,37 +23,37 @@ describe('MovieModel', () => {
 
 
 
-    describe('/GET List of all movies addet by auth users', () => {
-        it('it should GET all movies', (done) => {
-            let movie = new MovieModel({
-                Title: "Pulp fiction",
-                Released: "14 OCT 1994",
-                Genre: "Crime,Drama",
-                Director: "Quentin Tarantino",
-                AddedBy: 123,
+    // describe('/GET List of all movies addet by auth users', () => {
+    //     it('it should GET all movies', (done) => {
+    //         let movie = new MovieModel({
+    //             Title: "Pulp fiction",
+    //             Released: "14 OCT 1994",
+    //             Genre: "Crime,Drama",
+    //             Director: "Quentin Tarantino",
+    //             AddedBy: 123,
 
-            });
-            movie.save((err, movie) => {
-                chai.request(app)
-                    .get('/api/v1/movies')
-                    .end((err, res) => {
-                        if (err) {
-                            console.error(err);
-                            done();
+    //         });
+    //         movie.save((err, movie) => {
+    //             chai.request(app)
+    //                 .get('/api/v1/movies')
+    //                 .end((err, res) => {
+    //                     if (err) {
+    //                         console.error(err);
+    //                         done();
 
-                        }
-                        res.should.have.status(200);
-                        res.body.should.be.a('object');
-                        res.body.movies.should.be.a('array');
-
-
-                        done();
-                    });
-            });
-        })
+    //                     }
+    //                     res.should.have.status(200);
+    //                     res.body.should.be.a('object');
+    //                     res.body.movies.should.be.a('array');
 
 
-    });
+    //                     done();
+    //                 });
+    //         });
+    //     })
+
+
+    // });
 
 
 
@@ -64,7 +64,7 @@ describe('MovieModel', () => {
                 password: 'GBLtTyq3E_dsado9m6',
                 title: 'Pulp',
             } as AddMovieInput
-           
+
 
             chai.request(app)
                 .post('/api/v1/movies')
@@ -88,8 +88,8 @@ describe('MovieModel', () => {
                 username: 'premium-jim',
                 password: 'GBLtTyq3E_UNjFnpo9m6',
                 title: 'Pulp',
-            }  as AddMovieInput
-          
+            } as AddMovieInput
+
 
             chai.request(app)
                 .post('/api/v1/movies')
@@ -113,7 +113,7 @@ describe('MovieModel', () => {
                 password: "sR-_pcoow-27-6PAwCD8",
                 title: 'Pulp',
             } as AddMovieInput
-           
+
             let movie = MovieModel.insertMany([{
                 Title: "Pulp fiction",
                 Released: "14 OCT 1994",
@@ -149,7 +149,7 @@ describe('MovieModel', () => {
                 Director: "Quentin Tarantino",
                 AddedBy: 123,
 
-            }, ])
+            },])
 
 
             chai.request(app)

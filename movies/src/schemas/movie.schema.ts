@@ -33,4 +33,16 @@ export const addMovieSchema = object({
     })
 })
 
+// export const movieSchema = object({
+// Title: string(),
+//     Actors: string(),
+//         Director: string(),
+//             Genre: string(),
+//                 Released: string(),
+//                     Plot: string(),
+//                         Runtime: string(),
+//                             Awards: string(),
+// })
+
 export type AddMovieInput = TypeOf<typeof addMovieSchema>['body'];
+// export type MovieInput = TypeOf<typeof movieSchema>;

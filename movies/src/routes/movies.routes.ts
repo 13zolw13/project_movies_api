@@ -1,3 +1,4 @@
+import authUser from "../../middleware/User.middleware";
 import { addMovie, listOfAllMovies, movieDetails } from "../controllers/movies.controller";
 
 const express = require("express");
@@ -32,9 +33,9 @@ const router = express.Router()
  *                  
  *            
  */
-router.get('/v1/movies', listOfAllMovies);
+router.get('/v1/movies', authUser, listOfAllMovies);
 
-router.get('/v1/movies/:id', movieDetails);
+router.get('/v1/movies/:id', authUser,movieDetails);
 
 
 
@@ -73,7 +74,7 @@ router.get('/v1/movies/:id', movieDetails);
  *                  
  *            
  */
-router.post('/v1/movies', addMovie);
+router.post('/v1/movies', authUser, addMovie);
 
 
 export default router;

@@ -12,6 +12,17 @@ export interface UserJWT {
 
 }
 
+export interface MovieDetails {
+    Title: string
+    Actors: string,
+    Director: string,
+    Genre: string,
+    Released: string,
+    Plot: string,
+    Runtime: string,
+    Awards: string,
+}
+
 
 @pre<Movie>("save", function () {
     const date = new Date(this.Released);
@@ -48,22 +59,22 @@ export class Movie {
     Genre: string;
 
     @prop({
-        required: true
+        // required: true
     })
     AddedBy: string;
 
-    @prop({})
+    @prop()
     Plot: string;
 
-    @prop({})
+    @prop()
     Actors: string;
-    
-    @prop({})
+
+    @prop()
     Runtime: string;
-    
-    @prop({})
+
+    @prop()
     Awards: string;
-    
+
 
 }
 

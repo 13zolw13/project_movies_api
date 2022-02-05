@@ -14,21 +14,7 @@ export function findMovieById(movieId: string) {
     return MovieModel.find({ _id: movieId }) //.select(hideDetials);
 }
 
-export async function getAuthUser(username: string, password: string) {
-    const url = config.get<string>('authServiceURL');
-    console.log('url auth service', url);
-    try {
-        const data = await axios.post(url, {
-            username: username,
-            password: password
-        });
-        console.log('data getAuth', data.data);
-        return data;
-    } catch (error: any) {
-        console.error(error);
-        return;
-    }
-}
+
 
 
 
