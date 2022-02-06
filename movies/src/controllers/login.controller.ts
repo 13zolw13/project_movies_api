@@ -15,13 +15,12 @@ export async function loginUser(req: Request, res: Response) {
     const token = await getAuthUser(username, password)
 
     if (!token) {
+        res.locals.user = '';
 
         return res.status(404).clearCookie('token').send('User not authorized');
     }
     console.log('get auth login', token);
-    return res.status(201).cookie('token', token, {
-        signed: true
-    }).send({ msg: 'User login!' });
+    return res.status(201).cookie('token', token, ).send({ msg: 'User login!' });
 
 
 }

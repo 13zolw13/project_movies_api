@@ -59,9 +59,9 @@ export class Movie {
     Genre: string;
 
     @prop({
-        // required: true
+        required: true
     })
-    AddedBy: string;
+    AddedBy: number;
 
     @prop()
     Plot: string;

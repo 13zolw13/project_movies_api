@@ -45,7 +45,8 @@ services:
     environment:
       JWT_SECRET: 'blabla'
       DB_URI: 'mongodb://mongo:27017/moviesDb'
-      # OMDB_KEY: ${OMDB_KEY} 
+      OMDB_KEY: ${OMDB_KEY} 
+      COOKIE_KEY: ${COOKIE_KEY} 
 networks:
   my-network:
     driver: bridge

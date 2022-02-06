@@ -24,12 +24,7 @@ import { object, string, TypeOf } from "zod"
 export const addMovieSchema = object({
     body: object({
         title: string({ required_error: 'Title needed!' }),
-        username: string({
-            required_error: 'Username needed!'
-        }).min(4),
-        password: string({
-            required_error: 'Password needed!'
-        }).min(6),
+       
     })
 })
 

@@ -5,7 +5,9 @@ import {
 import jwt, {
     JwtPayload
 } from "jsonwebtoken";
-import MovieModel from "../models/movie.models";
+import MovieModel, {
+    UserJWT
+} from "../models/movie.models";
 import {
     AddMovieInput
 } from "../schemas/movie.schema";
@@ -14,9 +16,12 @@ import {
 
 
     getAllMovies,
-    findMovieById
+    findMovieById,
+    termsForAddingMovie
 } from "../services/movies.services";
-import { getAuthUser } from "../services/getUser.service";
+import {
+    getAuthUser
+} from "../services/getUser.service";
 import {
     getMovie
 } from "../services/omdbApi.services";
@@ -28,10 +33,7 @@ import {
 
 export async function listOfAllMovies(req: Request, res: Response) {
     const User = res.locals.user;
-    // console.log('res.locals', res.locals.user);
-    // console.log('List of all movies by id', User.userId);
 
-    // console.log('req.body', req.body);
     if (!User) {
         return res.status(400).send('No movies in DB');
     }
@@ -69,59 +71,40 @@ export async function movieDetails(req: Request, res: Response) {
 
 export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
     const {
-        title,
-        // username,
-        // password
+        title
     } = req.body
 
-    const User = res.locals.user;
-    console.log('User AddMovie', User);
-    // const data = await getAuthUser(username, password);
-    // if (!data) {
-    //     return res.status(404).send('User not authorized');
-    // }
-    // // const User = await encodedUser(data.data.token) as JwtPayload
+    const User = res.locals.user as UserJWT;
 
-    // console.log('Encoded User info', User)
-    // if (!User) {
-    //     return res.status(404).send('User not authorized');
-    // }
 
-    // const singtoken = jwt.sign({
-    //     User
-    // }, 'blabla');
-    // console.log(singtoken, ' <= Sign token');
     if (!User) {
-        return res.status(404).send('User not authorized');
+        return res.status(403).send('User not authorized');
+    }
+    if (!title) {
+        return res.status(400).send('No movie data ');
+    }
+    console.log('title->', title, 'UseriD from res.loclas', User.userId);
+    const movieData = await termsForAddingMovie(User, title);
+
+    if (!movieData) {
+        return res.status(400).send('No movie data from terms ');
     }
 
-    if (User.role === 'premium' || (!checkHowManyAdded(User.userId))) {
-        console.log('User premium or less then five');
+    const movie = await MovieModel.create({
+        ...movieData,
+        AddedBy: User.userId
+    });
 
+    if (movie) {
 
-        if (!title) {
-            return res.status(400).send('No title given');
-        }
-        const movieData = await getMovie(title);
-        console.log('movieData from axios', movieData);
-        console.log('user id ', User.userId)
-        if (!movieData) {
-            return res.status(400).send('No movie data ');
-        }
-        const movie = await MovieModel.create({
-            ...movieData,
-            AddedBy: User.userId
-        });
-        // , 
-        console.log('Movie after saving into DB ', movie)
-        // .cookie('token', singtoken, { signed: true })
         return res.status(201)
             .send({
                 msg: 'Movie succesfully added to db',
                 movie
             })
     }
-    return res.status(400).send({
-        msg: 'Cannot be added'
-    });
+
+    if (!movie) {
+        return res.status(400).send('Something went wrong');
+    }
 }
