@@ -24,8 +24,8 @@ export async function checkHowManyAdded(userId: number): Promise<boolean> {
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     let queryDate = year + '-' + month + '-01';
-
-
+    let limitBasic = config.get<number>("limitBasic")
+    console.log(limitBasic);
     const Movies = await MovieModel.find({
         AddedBy: userId,
         createdAt: {
@@ -33,7 +33,7 @@ export async function checkHowManyAdded(userId: number): Promise<boolean> {
         }
     });
 
-    if (Movies.length < 6) {
+    if (Movies.length < limitBasic) {
         return true;
 
     }
