@@ -30,10 +30,6 @@ services:
       context: ./movies
       dockerfile: Dockerfile
     # context: .
-
-
-
-    # dockerfile: ./movies/Dockerfile
     ports:
       - 3001:3001
     networks:

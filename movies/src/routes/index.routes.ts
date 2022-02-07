@@ -13,6 +13,32 @@ router.use('/healtcheck', (req: Request, res: Response) => {
         msg: 'healtcheck'
     })
 })
+
+/**
+ *  @openapi
+ *  /api/v1/login:
+ *   post:
+ *      tags: 
+ *        - login
+ *      summary: Endpoint for login.
+ *      
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/LoginInput'
+ *      responses:
+ *           404:
+ *               desctription: Porduct doesnt exists
+ *           200:
+ *               desctription: Succes.
+ *           401:
+ *               desctription: User not auth.
+ * 
+ *                  
+ *            
+ */
 router.post('/v1/login', loginUser)
 
 router.use(moviesRoutes);

@@ -35,6 +35,24 @@ const router = express.Router()
  */
 router.get('/v1/movies', authUser, listOfAllMovies);
 
+/**
+ *  @openapi
+ *  '/api/v1/movies/{id}':
+ *   get:
+ *      tags: 
+ *        - Movies
+ *      summary: More details about movie.
+ *      parameters:
+ *       - name: id 
+ *         in: path
+ *         description: The Id of the product
+ *         required: true
+ *      responses:
+ *          404:
+ *              desctription: Porduct doesnt exists
+ *          200:
+ *              desctription: Succes.
+ */
 router.get('/v1/movies/:id', authUser,movieDetails);
 
 

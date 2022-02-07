@@ -36,7 +36,7 @@ app.use('/api', Routes)
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.get('/swagger.json', (req: Request, res: Response) => {
 
-    log.info(`Swagger.json on -> /localhost:${port}/swagger.json`)
+  
     res.setHeader('Content-Type', 'application/json');
     res.send(specs);
 });

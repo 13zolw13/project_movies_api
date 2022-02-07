@@ -3,10 +3,13 @@ import {
     Response
 } from "express";
 import {
+    LoginInput
+} from "../schemas/movie.schema";
+import {
     getAuthUser
 } from "../services/getUser.service";
 import log from "../utils/logger";
-export async function loginUser(req: Request, res: Response) {
+export async function loginUser(req: Request < {}, {},LoginInput > , res: Response) {
     const {
 
         username,
@@ -20,7 +23,7 @@ export async function loginUser(req: Request, res: Response) {
 
         return res.status(403).clearCookie('token').send('User not authorized');
     }
-    log.info(token, 'get auth login' );
+    log.info(token, 'get auth login');
     return res.status(200).cookie('token', token, ).send({
         msg: 'User login!'
     });
