@@ -1,9 +1,10 @@
 import axios from 'axios';
 import config from 'config';
-import z from 'zod';
+
 import {
     MovieDetails
 } from '../models/movie.models';
+import log from '../utils/logger';
 
 export async function getMovie(title: string) {
     const apikey = config.get("omdb_key");
@@ -24,10 +25,10 @@ export async function getMovie(title: string) {
             Runtime: movieInfo.Runtime,
             Awards: movieInfo.Awards
         };
-        console.log('movie movieinput', movie);
+        log.info('movie movieinput', movie);
         return movie;
     } catch (error) {
-        console.error(error);
+        log.error(error);
         return;
     }
 }

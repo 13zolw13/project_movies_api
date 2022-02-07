@@ -13,6 +13,7 @@ import cors from 'cors';
 import config from 'config';
 import cookieParser  from 'cookie-parser'
 import authenticateUser from './middleware/authentication.middleware';
+import log from './utils/logger';
 
 
 
@@ -34,7 +35,7 @@ app.use('/api', Routes)
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.get('/swagger.json', (req: Request, res: Response) => {
 
-    console.log(`Swagger.json on -> /localhost:${port}/swagger.json`)
+    log.info(`Swagger.json on -> /localhost:${port}/swagger.json`)
     res.setHeader('Content-Type', 'application/json');
     res.send(specs);
 });
@@ -46,7 +47,7 @@ app.use('/*', (req: Request, res: Response) => {
 })
 app.listen(port, () => {
     connectDb(dbUri);
-    console.log(`app is running ${port}`);
+    log.info(`app is running ${port}`);
 
     swaggerDocs(app, port)
 
