@@ -24,7 +24,7 @@ import { object, string, TypeOf } from "zod"
 export const addMovieSchema = object({
     body: object({
         title: string({ required_error: 'Title needed!' }),
-       
+
     })
 })
 
@@ -39,5 +39,13 @@ export const addMovieSchema = object({
 //                             Awards: string(),
 // })
 
+export const MovieDetailsSchema = object({
+    params: object({
+        id: string({ required_error: 'Id required' }),
+
+    })
+})
 export type AddMovieInput = TypeOf<typeof addMovieSchema>['body'];
 // export type MovieInput = TypeOf<typeof movieSchema>;
+
+export type MovieDetailsInput = TypeOf<typeof MovieDetailsSchema>['params'];

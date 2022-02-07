@@ -41,7 +41,7 @@ app.get('/swagger.json', (req: Request, res: Response) => {
     res.send(specs);
 });
 
-app.use('/*', (req: Request, res: Response) => {
+app.use('*', (req: Request, res: Response) => {
     res.status(404).send({
         msg: 'Not Found'
     })

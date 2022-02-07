@@ -2,11 +2,12 @@ import {
     Request,
     Response
 } from "express";
+import checkIdValid from "../middleware/validateMongoId.middleware";
 import MovieModel, {
     UserJWT
 } from "../models/movie.models";
 import {
-    AddMovieInput
+    AddMovieInput, MovieDetailsInput
 } from "../schemas/movie.schema";
 import {
     getAllMovies,
@@ -24,7 +25,7 @@ export async function listOfAllMovies(req: Request, res: Response) {
     if (!User) {
         return res.status(403).send('No movies in DB');
     }
-
+    log.info(User, ' ListOfALLMovies ->User');
     const movies = await getAllMovies(User.userId);
     log.info(movies, ' ListOfALLMovies -> all movies added by a user');
 
@@ -38,10 +39,13 @@ export async function listOfAllMovies(req: Request, res: Response) {
 
 }
 
-export async function movieDetails(req: Request, res: Response) {
+export async function movieDetails(req: Request<MovieDetailsInput>, res: Response) {
     const {
         id
     } = req.params;
+    if (!checkIdValid(id)) {
+        return res.status(404).send('No movie data');
+    }
 
     const movie = await findMovieById(id);
     if (!movie) {
@@ -55,7 +59,7 @@ export async function movieDetails(req: Request, res: Response) {
 
 
 
-export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
+export async function addMovie(req: Request<{}, {}, AddMovieInput>, res: Response) {
     const {
         title
     } = req.body
