@@ -9,19 +9,24 @@ import {
     getMovie
 } from './omdbApi.services';
 
-const hideDetials = '-_id -__v -createdAt -updatedAt -Plot -Actors -Runtime -Awards';
+const hideDetails = ["-_id", "-__v", "-createdAt", "-updatedAt", "-AddedBy"];
+const shortDetails = [",-Plot", "-Actors", "-Runtime", "-Awards"];
+
 
 
 export function getAllMovies(userId: string) {
+    const whatToHide = (hideDetails.join(',') + shortDetails.join(',')).split(",");
+    log.info(whatToHide, 'What to hide')
     return MovieModel.find({
         AddedBy: userId
-    }) //.select(hideDetials)
+    }).select(whatToHide)
 }
 
 export function findMovieById(movieId: string) {
+    const whatToHide = hideDetails;
     return MovieModel.find({
         _id: movieId
-    }) //.select(hideDetials);
+    }).select(whatToHide);
 }
 
 
@@ -29,7 +34,7 @@ export async function checkHowManyAdded(userId: number): Promise<boolean> {
 
     let queryDate = DateforDb();
     let limitBasic = config.get<number>("limitBasic")
-    log.info(limitBasic);
+    log.info(limitBasic, 'Set limit for basic user');
     const Movies = await MovieModel.find({
         AddedBy: userId,
         createdAt: {
@@ -60,10 +65,10 @@ export async function termsForAddingMovie(User: UserJWT, title: string) {
             },
             AddedBy: User.userId
         });
-         
-        log.info('length array of the same movies', existingMovie.length)
+
+        log.info(existingMovie.length, 'length array of the same movies',)
         if (existingMovie.length < 1) {
-            log.info('Movie with the same title doesnt exists on users list', existingMovie);
+            log.info(existingMovie, 'Movie with the same title doesnt exists on users list');
             return await getMovie(title);
 
         }

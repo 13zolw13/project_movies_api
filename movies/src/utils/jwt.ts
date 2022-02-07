@@ -6,24 +6,25 @@ import {
 import log from "./logger";
 
 
-export function encodedUser < T > (token: string): UserJWT | null {
-    const key = config.get < string > ('jwt');
-    log.info(' auth middleware=> encodedUser key', key)
-    log.info(' auth middleware=> encodedUser token', token);
+export function encodedUser<T>(token: string): UserJWT | null {
+
+
+
     try {
-        const data = jwt.verify(token, key!) as UserJWT;
-        log.info(' auth middleware=> encodedUser data', data)
-        return data;
-    } catch (error:any) {
-        log.error('Error', error.code)
+        if (config.has('jwt')) {
+            const key = config.get<string>('jwt')
+            log.info(key, ' auth middleware=> encodedUser key')
+            log.info(token, ' auth middleware=> encodedUser token');
+            const data = jwt.verify(token, key!) as UserJWT;
+            log.info(data, ' auth middleware=> encodedUser data')
+            return data;
+        }
+
+        return null;
+    } catch (error: any) {
+        log.error(error, 'Error',)
         return null;
     }
-    // if (data) {
 
-    //     return data;
-    // } else {
-
-    //     return null;
-    // }
 
 }

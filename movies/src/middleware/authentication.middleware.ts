@@ -18,12 +18,12 @@ const authenticateUser = async (req: Request, res: Response, next: NextFunction)
     if (!token) {
         return next();
     }
-    log.info('middleware-> authenticateUser token', token);
+    log.info(token, 'middleware-> authenticateUser token');
 
     const user =await  encodedUser(token.toString());
-    log.info("middleware-> user", user)
+    log.info(user, "middleware-> user")
     if (user) {
-        log.info('authmiddleware -> authenticateUser ->', user);
+        log.info( user,'authmiddleware -> authenticateUser ->');
         res.locals.user = user;
 
     }

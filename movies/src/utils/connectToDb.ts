@@ -8,7 +8,7 @@ async function connectDb(dbUri: string) {
         await mongoose.connect(dbUri);
         log.info('Connected to db');
     }
-    catch (e: any {
+    catch (e: any) {
         log.error(e);
         process.exit(1)
     }

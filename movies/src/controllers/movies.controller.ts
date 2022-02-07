@@ -22,14 +22,14 @@ export async function listOfAllMovies(req: Request, res: Response) {
     const User = res.locals.user;
 
     if (!User) {
-        return res.status(400).send('No movies in DB');
+        return res.status(403).send('No movies in DB');
     }
 
     const movies = await getAllMovies(User.userId);
-    log.info('all movies added by a user', movies);
+    log.info(movies, ' ListOfALLMovies -> all movies added by a user');
 
     if (!movies) {
-        return res.status(400).send('No movies in DB');
+        return res.status(404).send('No movies in DB');
     }
     return res.status(200).send({
         msg: 'List of all movies',
@@ -55,7 +55,7 @@ export async function movieDetails(req: Request, res: Response) {
 
 
 
-export async function addMovie(req: Request < {}, AddMovieInput > , res: Response) {
+export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
     const {
         title
     } = req.body
@@ -73,7 +73,7 @@ export async function addMovie(req: Request < {}, AddMovieInput > , res: Respons
     const movieData = await termsForAddingMovie(User, title);
 
     if (!movieData) {
-        return res.status(400).send('No movie data from terms ');
+        return res.status(404).send('No movie data from terms ');
     }
 
     const movie = await MovieModel.create({
@@ -91,6 +91,6 @@ export async function addMovie(req: Request < {}, AddMovieInput > , res: Respons
     }
 
     if (!movie) {
-        return res.status(400).send('Something went wrong');
+        return res.status(404).send('Something went wrong');
     }
 }

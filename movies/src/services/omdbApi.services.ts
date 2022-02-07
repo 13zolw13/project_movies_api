@@ -25,7 +25,7 @@ export async function getMovie(title: string) {
             Runtime: movieInfo.Runtime,
             Awards: movieInfo.Awards
         };
-        log.info('movie movieinput', movie);
+        log.info(movie, 'movie movieinput');
         return movie;
     } catch (error) {
         log.error(error);

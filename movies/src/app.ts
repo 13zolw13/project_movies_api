@@ -11,19 +11,20 @@ import specs from './utils/swagger';
 import swaggerDocs from './utils/swagger';
 import cors from 'cors';
 import config from 'config';
-import cookieParser  from 'cookie-parser'
+import cookieParser from 'cookie-parser'
 import authenticateUser from './middleware/authentication.middleware';
 import log from './utils/logger';
+import checkEnvVar from './utils/checkingEnvVar';
 
 
 
 const app = express();
 
 
-
+checkEnvVar();
 
 const port = config.get<number>('port');
-const dbUri =config.get<string>("dbUri");
+const dbUri = config.get<string>("dbUri");
 const cookieKey = config.get<string>("cookieKey")
 
 app.use(express.json());
@@ -42,7 +43,7 @@ app.get('/swagger.json', (req: Request, res: Response) => {
 
 app.use('/*', (req: Request, res: Response) => {
     res.status(404).send({
-        msg: 'Internal Server Error'
+        msg: 'Not Found'
     })
 })
 app.listen(port, () => {
