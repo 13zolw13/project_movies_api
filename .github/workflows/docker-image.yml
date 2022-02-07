@@ -16,7 +16,7 @@ jobs:
     env: 
      OMDB_KEY: ${{secrets.OMDB_KEY}}
      COOKIE_KEY: ${{secrets.COOKIE_KEY}}
-     
+     JWT_SECRET: ${{secrets.JWT_SECRET}}
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
