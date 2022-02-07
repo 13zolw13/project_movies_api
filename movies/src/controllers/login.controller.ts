@@ -5,6 +5,7 @@ import {
 import {
     getAuthUser
 } from "../services/getUser.service";
+import log from "../utils/logger";
 export async function loginUser(req: Request, res: Response) {
     const {
 
@@ -19,8 +20,10 @@ export async function loginUser(req: Request, res: Response) {
 
         return res.status(404).clearCookie('token').send('User not authorized');
     }
-    console.log('get auth login', token);
-    return res.status(201).cookie('token', token, ).send({ msg: 'User login!' });
+    log.info('get auth login', token);
+    return res.status(201).cookie('token', token, ).send({
+        msg: 'User login!'
+    });
 
 
 }

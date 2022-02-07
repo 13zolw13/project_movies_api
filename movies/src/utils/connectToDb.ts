@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
+import log from './logger';
 
-async function connectDb(dbUri:string) {
-    
+async function connectDb(dbUri: string) {
+
 
     try {
         await mongoose.connect(dbUri);
-        console.log('Connected to db');
+        log.info('Connected to db');
     }
-    catch (e) {
-        console.error(e);
+    catch (e: any {
+        log.error(e);
         process.exit(1)
     }
 }

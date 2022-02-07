@@ -1,19 +1,20 @@
 import axios from 'axios';
 import config from 'config';
-import jwt from 'jsonwebtoken';
+import log from '../utils/logger';
+
 
 export async function getAuthUser(username: string, password: string) {
-    const url = config.get<string>('authServiceURL');
-    console.log('url auth service', url);
+    const url = config.get < string > ('authServiceURL');
+    log.info('url auth service', url);
     try {
         const data = await axios.post(url, {
             username: username,
             password: password
         });
-        console.log('data getAuth', data.data);
+        log.info('data getAuth', data.data);
         return data.data.token;
     } catch (error: any) {
-        console.error(error);
+        log.error(error);
         return;
     }
 }

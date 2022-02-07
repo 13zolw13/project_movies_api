@@ -12,7 +12,7 @@ import swaggerDocs from './utils/swagger';
 import cors from 'cors';
 import config from 'config';
 import cookieParser  from 'cookie-parser'
-import authenticateUser from '../middleware/authentication.middleware';
+import authenticateUser from './middleware/authentication.middleware';
 
 
 

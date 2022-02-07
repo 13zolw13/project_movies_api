@@ -1,31 +1,35 @@
-import axios from 'axios';
 import config from 'config';
-import jwt from 'jsonwebtoken';
-import MovieModel, { Movie, UserJWT } from '../models/movie.models';
-import { getMovie } from './omdbApi.services';
+import MovieModel, {
+    UserJWT
+} from '../models/movie.models';
+import DateforDb from '../utils/getDate';
+
+import log from '../utils/logger';
+import {
+    getMovie
+} from './omdbApi.services';
 
 const hideDetials = '-_id -__v -createdAt -updatedAt -Plot -Actors -Runtime -Awards';
 
 
 export function getAllMovies(userId: string) {
-    return MovieModel.find({ AddedBy: userId }) //.select(hideDetials)
+    return MovieModel.find({
+        AddedBy: userId
+    }) //.select(hideDetials)
 }
 
 export function findMovieById(movieId: string) {
-    return MovieModel.find({ _id: movieId }) //.select(hideDetials);
+    return MovieModel.find({
+        _id: movieId
+    }) //.select(hideDetials);
 }
 
 
-
-
-
 export async function checkHowManyAdded(userId: number): Promise<boolean> {
-    let date = new Date();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let queryDate = year + '-' + month + '-01';
+
+    let queryDate = DateforDb();
     let limitBasic = config.get<number>("limitBasic")
-    console.log(limitBasic);
+    log.info(limitBasic);
     const Movies = await MovieModel.find({
         AddedBy: userId,
         createdAt: {
@@ -43,22 +47,23 @@ export async function checkHowManyAdded(userId: number): Promise<boolean> {
 
 export async function termsForAddingMovie(User: UserJWT, title: string) {
 
-    console.log("User role:", User.role, 'User id:', User.userId, ' Title: ', title);
     const howMany = await checkHowManyAdded(User.userId);
-    console.log(howMany, 'less then five')
+    log.info(howMany, 'check how many if less then limit returns true');
+
     if (User.role === 'premium' || howMany) {
-        console.log('User premium or less then five');
+        log.info('User premium or less then five');
 
-
-        const searchTitle = '/' + title + '/';
-        console.log(searchTitle, 'title regex')
         const existingMovie = await MovieModel.find({
-            Title: { $regex: title, $options: 'i' }, AddedBy: User.userId
+            Title: {
+                $regex: title,
+                $options: 'i'
+            },
+            AddedBy: User.userId
         });
-        // 
-        console.log('length array of the same movies', existingMovie.length)
+         
+        log.info('length array of the same movies', existingMovie.length)
         if (existingMovie.length < 1) {
-            console.log('Movie with the same title doesnt exists on users list', existingMovie);
+            log.info('Movie with the same title doesnt exists on users list', existingMovie);
             return await getMovie(title);
 
         }
@@ -66,14 +71,3 @@ export async function termsForAddingMovie(User: UserJWT, title: string) {
     }
     return;
 }
-
-
-
-    // if (!movieData) {
-    //     return res.status(400).send('No movie data ');
-    // }
-
-
-
-
-

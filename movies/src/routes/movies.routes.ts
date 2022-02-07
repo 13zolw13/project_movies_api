@@ -1,4 +1,4 @@
-import authUser from "../../middleware/User.middleware";
+import authUser from "../middleware/User.middleware";
 import { addMovie, listOfAllMovies, movieDetails } from "../controllers/movies.controller";
 
 const express = require("express");

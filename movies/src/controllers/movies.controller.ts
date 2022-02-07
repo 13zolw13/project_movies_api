@@ -2,9 +2,6 @@ import {
     Request,
     Response
 } from "express";
-import jwt, {
-    JwtPayload
-} from "jsonwebtoken";
 import MovieModel, {
     UserJWT
 } from "../models/movie.models";
@@ -12,22 +9,12 @@ import {
     AddMovieInput
 } from "../schemas/movie.schema";
 import {
-    checkHowManyAdded,
-
-
     getAllMovies,
     findMovieById,
     termsForAddingMovie
 } from "../services/movies.services";
-import {
-    getAuthUser
-} from "../services/getUser.service";
-import {
-    getMovie
-} from "../services/omdbApi.services";
-import {
-    encodedUser
-} from "../utils/jwt";
+import log from "../utils/logger";
+
 
 
 
@@ -39,8 +26,7 @@ export async function listOfAllMovies(req: Request, res: Response) {
     }
 
     const movies = await getAllMovies(User.userId);
-    console.log('all movies added by a user', movies);
-
+    log.info('all movies added by a user', movies);
 
     if (!movies) {
         return res.status(400).send('No movies in DB');
@@ -69,7 +55,7 @@ export async function movieDetails(req: Request, res: Response) {
 
 
 
-export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
+export async function addMovie(req: Request < {}, AddMovieInput > , res: Response) {
     const {
         title
     } = req.body
@@ -83,7 +69,7 @@ export async function addMovie(req: Request<{}, AddMovieInput>, res: Response) {
     if (!title) {
         return res.status(400).send('No movie data ');
     }
-    console.log('title->', title, 'UseriD from res.loclas', User.userId);
+
     const movieData = await termsForAddingMovie(User, title);
 
     if (!movieData) {

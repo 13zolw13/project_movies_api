@@ -3,7 +3,6 @@ import {
     Request,
     Response
 } from "express";
-import { getAuthUser } from "../src/services/getUser.service";
 
 
 const authUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -12,18 +11,12 @@ const authUser = async (req: Request, res: Response, next: NextFunction) => {
         token
     } = req.signedCookies;
 
-
-
-
-
-    const User  = res.locals.user;
-   
+    const User = res.locals.user;
 
     if (!token && !User) {
         res.sendStatus(403);
     }
     return next();
-
 }
 
 export default authUser;

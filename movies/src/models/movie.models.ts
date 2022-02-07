@@ -1,33 +1,38 @@
-import { getModelForClass, modelOptions, pre, prop } from "@typegoose/typegoose";
+import {
+    getModelForClass,
+    modelOptions,
+    pre,
+    prop
+} from "@typegoose/typegoose";
 
 
 export interface UserJWT {
     userId: number,
-    name: string,
-    role: string,
-    iat: number,
-    exp: number,
-    iss: string,
-    sub: string,
+        name: string,
+        role: string,
+        iat: number,
+        exp: number,
+        iss: string,
+        sub: string,
 
 }
 
 export interface MovieDetails {
     Title: string
     Actors: string,
-    Director: string,
-    Genre: string,
-    Released: string,
-    Plot: string,
-    Runtime: string,
-    Awards: string,
+        Director: string,
+        Genre: string,
+        Released: string,
+        Plot: string,
+        Runtime: string,
+        Awards: string,
 }
 
 
-@pre<Movie>("save", function () {
-    const date = new Date(this.Released);
-    this.Released = date.toString();
-}
+@pre < Movie > ("save", function () {
+        const date = new Date(this.Released);
+        this.Released = date.toString();
+    }
 
 )
 
