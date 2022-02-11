@@ -14,7 +14,7 @@ const shortDetails = [",-Plot", "-Actors", "-Runtime", "-Awards"];
 
 
 
-export function getAllMovies(userId: string) {
+export function getAllMovies(userId: number) {
     const whatToHide = (hideDetails.join(',') + shortDetails.join(',')).split(",");
     log.info(whatToHide, 'What to hide')
     return MovieModel.find({

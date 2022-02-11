@@ -19,7 +19,7 @@ const validateInput = (schema: AnyZodObject) => (req: Request, res: Response, ne
         })
         next();
     } catch (error: any) {
-        log.error(error, 'Error  validation input');
+        log.error(error.message, 'Error zod data validation');
         return res.status(400).send(error.error)
     }
 }

@@ -5,6 +5,8 @@ import express, {
 import {
     loginUser
 } from '../controllers/login.controller';
+import validateInput from '../middleware/validateInput.middleware';
+import { LoginSchema } from '../schemas/login.schema';
 import moviesRoutes from './movies.routes';
 
 const router = express.Router();
@@ -39,7 +41,7 @@ router.use('/healtcheck', (req: Request, res: Response) => {
  *                  
  *            
  */
-router.post('/v1/login', loginUser)
+router.post('/v1/login',validateInput(LoginSchema), loginUser)
 
 router.use(moviesRoutes);
 

@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from "zod"
+import { object, string, number, TypeOf } from "zod"
 
 /**
 * @openapi
@@ -23,6 +23,17 @@ export const addMovieSchema = object({
     body: object({
         title: string({ required_error: 'Title needed!' }),
 
+    }),
+     locals: object({
+        user: object({
+            userId: number({ required_error: 'Data required' }),
+            name: string({ required_error: 'Data required' }),
+            role: string({ required_error: 'Data required' }),
+            iat: number({ required_error: 'Data required' }),
+            exp: number({ required_error: 'Data required' }),
+            iss: string({ required_error: 'Data required' }),
+            sub: string({ required_error: 'Data required' }),
+        }),
     })
 })
 
@@ -41,36 +52,26 @@ export const MovieDetailsSchema = object({
     params: object({
         id: string({ required_error: 'Id required' }),
 
+    }),
+    locals: object({
+        user: object({
+            userId: number({ required_error: 'Data required' }),
+            name: string({ required_error: 'Data required' }),
+            role: string({ required_error: 'Data required' }),
+            iat: number({ required_error: 'Data required' }),
+            exp: number({ required_error: 'Data required' }),
+            iss: string({ required_error: 'Data required' }),
+            sub: string({ required_error: 'Data required' }),
+        }),
     })
 })
 
 
-/**
-* @openapi
-* components:
-*  schemas:
-*   LoginInput:
-*     type: object
-*     required:
-*       - username
-*       - password
-*     properties:
-*        username:
-*            type: string
-*            default: premium-jim
-*        password:
-*            type: string
-*            default: GBLtTyq3E_UNjFnpo9m6
-*/
-export const LoginSchema = object({
-    body: object({
-        username: string({ required_error: 'Username required' }).min(6),
-        password: string({ required_error: 'Password required' }).min(6)
-    })
-})
 
-export type AddMovieInput = TypeOf<typeof addMovieSchema>['body'];
-export type LoginInput = TypeOf<typeof LoginSchema>['body'];
+
+
+export type AddMovieInput = TypeOf<typeof addMovieSchema>;
+
 // export type MovieInput = TypeOf<typeof movieSchema>;
 
-export type MovieDetailsInput = TypeOf<typeof MovieDetailsSchema>['params'];
+export type MovieDetailsInput = TypeOf<typeof MovieDetailsSchema>;

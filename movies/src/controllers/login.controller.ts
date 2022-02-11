@@ -4,7 +4,7 @@ import {
 } from "express";
 import {
     LoginInput
-} from "../schemas/movie.schema";
+} from "../schemas/login.schema";
 import {
     getAuthUser
 } from "../services/getUser.service";

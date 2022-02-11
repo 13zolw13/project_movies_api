@@ -6,6 +6,7 @@ import checkIdValid from "../middleware/validateMongoId.middleware";
 import MovieModel, {
     UserJWT
 } from "../models/movie.models";
+import { LoginUserInput } from "../schemas/login.schema";
 import {
     AddMovieInput, MovieDetailsInput
 } from "../schemas/movie.schema";
@@ -19,7 +20,7 @@ import log from "../utils/logger";
 
 
 
-export async function listOfAllMovies(req: Request, res: Response) {
+export async function listOfAllMovies(req: Request, res: Response<{}, LoginUserInput>) {
     const User = res.locals.user;
 
     if (!User) {
@@ -39,7 +40,7 @@ export async function listOfAllMovies(req: Request, res: Response) {
 
 }
 
-export async function movieDetails(req: Request<MovieDetailsInput>, res: Response) {
+export async function movieDetails(req: Request<MovieDetailsInput['params']>, res: Response<{}, MovieDetailsInput['locals']>) {
     const {
         id
     } = req.params;
@@ -59,20 +60,20 @@ export async function movieDetails(req: Request<MovieDetailsInput>, res: Respons
 
 
 
-export async function addMovie(req: Request<{}, {}, AddMovieInput>, res: Response) {
+export async function addMovie(req: Request<{}, {}, AddMovieInput['body']>, res: Response<{}, AddMovieInput['locals']>) {
     const {
         title
     } = req.body
 
-    const User = res.locals.user as UserJWT;
+    const User = res.locals.user
 
 
-    if (!User) {
-        return res.status(401).send('User not authorized');
-    }
-    if (!title) {
-        return res.status(400).send('No movie data ');
-    }
+    // if (!User) {
+    //     return res.status(401).send('User not authorized');
+    // }
+    // if (!title) {
+    //     return res.status(400).send('No movie data ');
+    // }
 
     const movieData = await termsForAddingMovie(User, title);
 

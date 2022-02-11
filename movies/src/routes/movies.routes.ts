@@ -1,7 +1,11 @@
+import express from "express"
+
 import authUser from "../middleware/user.middleware";
 import { addMovie, listOfAllMovies, movieDetails } from "../controllers/movies.controller";
+import validateInput from "../middleware/validateInput.middleware";
+import { addMovieSchema, MovieDetailsSchema } from "../schemas/movie.schema";
+import { LoginUserSchema } from "../schemas/login.schema";
 
-const express = require("express");
 
 
 const router = express.Router()
@@ -33,7 +37,7 @@ const router = express.Router()
  *                  
  *            
  */
-router.get('/v1/movies', authUser, listOfAllMovies);
+router.get('/v1/movies', validateInput(LoginUserSchema), authUser, listOfAllMovies);
 
 /**
  *  @openapi
@@ -53,7 +57,7 @@ router.get('/v1/movies', authUser, listOfAllMovies);
  *          200:
  *              desctription: Succes.
  */
-router.get('/v1/movies/:id', authUser,movieDetails);
+router.get('/v1/movies/:id', validateInput(MovieDetailsSchema), authUser, movieDetails);
 
 
 
@@ -92,7 +96,7 @@ router.get('/v1/movies/:id', authUser,movieDetails);
  *                  
  *            
  */
-router.post('/v1/movies', authUser, addMovie);
+router.post('/v1/movies', validateInput(addMovieSchema),authUser, addMovie);
 
 
 export default router;
