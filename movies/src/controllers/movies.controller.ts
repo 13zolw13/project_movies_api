@@ -68,7 +68,7 @@ export async function addMovie(req: Request<{}, {}, AddMovieInput>, res: Respons
 
 
     if (!User) {
-        return res.status(403).send('User not authorized');
+        return res.status(401).send('User not authorized');
     }
     if (!title) {
         return res.status(400).send('No movie data ');

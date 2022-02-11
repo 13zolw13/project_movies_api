@@ -15,6 +15,7 @@ import cookieParser from 'cookie-parser'
 import authenticateUser from './middleware/authentication.middleware';
 import log from './utils/logger';
 import checkEnvVar from './utils/checkingEnvVar';
+import handleError from './middleware/error.middleware';
 
 
 
@@ -36,16 +37,19 @@ app.use('/api', Routes)
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.get('/swagger.json', (req: Request, res: Response) => {
 
-  
+
     res.setHeader('Content-Type', 'application/json');
     res.send(specs);
 });
+app.use(handleError)
 
-app.use('*', (req: Request, res: Response) => {
-    res.status(404).send({
-        msg: 'Not Found'
-    })
-})
+// app.use('*', (req: Request, res: Response) => {
+//     res.status(404).send({
+//         msg: 'Not Found'
+//     })
+// })
+
+
 app.listen(port, () => {
     connectDb(dbUri);
     log.info(`app is running ${port}`);

@@ -20,7 +20,6 @@ export async function loginUser(req: Request < {}, {},LoginInput > , res: Respon
 
     if (!token) {
         res.locals.user = '';
-
         return res.status(403).clearCookie('token').send('User not authorized');
     }
     log.info(token, 'get auth login');

@@ -3,10 +3,11 @@ import {
     Request,
     Response
 } from "express";
+import { CustomError, ErrorStatus } from "../models/custom-error.models";
 
 
-const authUser = async (req: Request, res: Response, next: NextFunction) => {
-
+const authUser = (req: Request, res: Response, next: NextFunction) => {
+    // async
     const {
         token
     } = req.signedCookies;
@@ -14,7 +15,8 @@ const authUser = async (req: Request, res: Response, next: NextFunction) => {
     const User = res.locals.user;
 
     if (!token && !User) {
-        res.sendStatus(403);
+        // res.sendStatus(403);
+        throw new CustomError(ErrorStatus.NotAuth);
     }
     return next();
 }

@@ -14,12 +14,12 @@ const validateInput = (schema: AnyZodObject) => (req: Request, res: Response, ne
             body: req.body,
             params: req.params,
             query: req.query,
-            cookies:req.cookies,
+            cookies: req.cookies,
+            locals: res.locals,
         })
         next();
     } catch (error: any) {
         log.error(error, 'Error  validation input');
-        
         return res.status(400).send(error.error)
     }
 }
