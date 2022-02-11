@@ -16,6 +16,7 @@ import authenticateUser from './middleware/authentication.middleware';
 import log from './utils/logger';
 import checkEnvVar from './utils/checkingEnvVar';
 import handleError from './middleware/error.middleware';
+import { CustomError } from './models/custom-error.models';
 
 
 
@@ -41,20 +42,24 @@ app.get('/swagger.json', (req: Request, res: Response) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(specs);
 });
+
+
+app.use('*', (req: Request, res: Response) => {
+    throw new CustomError(404, 'Not Found');
+})
 app.use(handleError)
 
-// app.use('*', (req: Request, res: Response) => {
-//     res.status(404).send({
-//         msg: 'Not Found'
-//     })
-// })
+app.listen(port, async () => {
+    try {
+        await connectDb(dbUri);
+        log.info('Connected to db');
+        log.info(`app is running ${port}`);
 
-
-app.listen(port, () => {
-    connectDb(dbUri);
-    log.info(`app is running ${port}`);
-
-    swaggerDocs(app, port)
+        swaggerDocs(app, port)
+    } catch (err: any) {
+        log.error(err, 'Error starting server');
+        throw new CustomError(404, err.message);
+    }
 
 })
 

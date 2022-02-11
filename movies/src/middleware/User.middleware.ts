@@ -16,7 +16,7 @@ const authUser = (req: Request, res: Response, next: NextFunction) => {
 
     if (!token && !User) {
         // res.sendStatus(403);
-        throw new CustomError(ErrorStatus.NotAuth);
+        throw new CustomError(ErrorStatus.NotAuth, 'Forbbiden');
     }
     return next();
 }
