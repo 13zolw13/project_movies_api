@@ -26,8 +26,10 @@
     "mongoose": "^6.1.8",
     "nodemon": "^2.0.15",
     "pino": "^7.6.5",
+    "reflect-metadata": "^0.1.13",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.3.0",
+    "typedi": "^0.10.0",
     "zod": "^3.11.6"
   },
   "devDependencies": {

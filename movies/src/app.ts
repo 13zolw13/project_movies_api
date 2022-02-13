@@ -1,4 +1,6 @@
-require('dotenv').config()
+import 'reflect-metadata';
+
+require('dotenv').config();
 
 import swaggerUI from 'swagger-ui-express';
 import express, {
@@ -17,7 +19,6 @@ import log from './utils/logger';
 import checkEnvVar from './utils/checkingEnvVar';
 import handleError from './middleware/error.middleware';
 import { CustomError } from './models/custom-error.models';
-
 
 
 const app = express();

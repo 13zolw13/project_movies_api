@@ -2,7 +2,7 @@ import {
     Request,
     Response
 } from "express";
-import checkIdValid from "../middleware/validateMongoId.middleware";
+import {checkIdValid} from "../middleware/validateMongoId.middleware";
 import MovieModel, {
     UserJWT
 } from "../models/movie.models";
@@ -44,11 +44,13 @@ export async function movieDetails(req: Request<MovieDetailsInput['params']>, re
     const {
         id
     } = req.params;
-    if (!checkIdValid(id)) {
-        return res.status(404).send('No movie data');
-    }
+    const { userId } = res.locals.user;
+    // if (!checkIdValid(id)) {
+    //     return res.status(404).send('No movie data');
+    // }
 
-    const movie = await findMovieById(id);
+    const movie = await findMovieById(id, userId);
+    console.log(movie, "movie movie data")
     if (!movie) {
         return res.status(400).send('No movies in DB');
     }

@@ -5,6 +5,7 @@ import { addMovie, listOfAllMovies, movieDetails } from "../controllers/movies.c
 import validateInput from "../middleware/validateInput.middleware";
 import { addMovieSchema, MovieDetailsSchema } from "../schemas/movie.schema";
 import { LoginUserSchema } from "../schemas/login.schema";
+import checkValidMongoId from "../middleware/validateMongoId.middleware";
 
 
 
@@ -57,7 +58,7 @@ router.get('/v1/movies', validateInput(LoginUserSchema), authUser, listOfAllMovi
  *          200:
  *              desctription: Succes.
  */
-router.get('/v1/movies/:id', validateInput(MovieDetailsSchema), authUser, movieDetails);
+router.get('/v1/movies/:id', validateInput(MovieDetailsSchema), checkValidMongoId ,authUser, movieDetails);
 
 
 
