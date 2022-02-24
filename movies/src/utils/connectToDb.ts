@@ -5,8 +5,9 @@ function connectDb(dbUri: string) {
 
 
     try {
+        console.log("connecting to db");
         return mongoose.connect(dbUri);
-        
+
     }
     catch (e: any) {
         log.error(e);

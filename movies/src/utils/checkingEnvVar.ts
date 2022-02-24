@@ -8,9 +8,9 @@ function checkEnvVar() {
     if (!config.has('dbUri')) {
         log.error('No dbUri variable');
     }
-    if (!config.has('cookieKey')) {
-        log.error('No cookieKey variable');
-    }
+    // if (!config.has('cookieKey')) {
+    //     log.error('No cookieKey variable');
+    // }
     if (!config.has('omdb_key')) {
         log.error('No omdb_key variable');
     }

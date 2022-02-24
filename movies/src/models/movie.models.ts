@@ -92,7 +92,7 @@ export class Movie {
     public static async findMovieDetails(this: ReturnModelType<typeof Movie>, movieId: string, userId: number) {
         const whatToHide = hideDetails;
 
-        return await this.find({ _id: movieId, AddedBy: userId }).select(whatToHide);;
+        return await this.findOne({ _id: movieId, AddedBy: userId }).select(whatToHide);;
     }
 
     public static checkHowManyMovies(this: ReturnModelType<typeof Movie>, userId: number, queryDate: string) {
@@ -115,7 +115,7 @@ export class Movie {
 
     public static async checkIfArleadyExists(this: ReturnModelType<typeof Movie>, title: string, UserId: number) {
 
-        return await this.find({
+        return await this.findOne({
             Title: {
                 $regex: title,
                 $options: 'i'

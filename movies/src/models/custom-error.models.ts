@@ -3,9 +3,9 @@ export class CustomError {
     status!: number;
     additionalInfo!: any;
     // collection = [{ status: 400, msg: 'messages' }, { status: 403, msg: 'messages' }, { status: 404, msg: 'messages' }]
-    constructor(status: number = 500, message:string, additionalInfo: any = {}) {
+    constructor(status: number = 500, message: string = 'Somethin went wrong', additionalInfo: any = {}) {
         this.message = message;
-            this.status = status;
+        this.status = status;
         this.additionalInfo = additionalInfo;
     }
 }
