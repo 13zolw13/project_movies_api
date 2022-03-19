@@ -1,10 +1,11 @@
 import express from "express"
 
-import authUser from "../middleware/user.middleware";
+import {authUser} from "../middleware/user.middleware";
 import { addMovie, listOfAllMovies, movieDetails } from "../controllers/movies.controller";
 import validateInput from "../middleware/validateInput.middleware";
 import { addMovieSchema, MovieDetailsSchema } from "../schemas/movie.schema";
 import { LoginUserSchema } from "../schemas/login.schema";
+import checkValidMongoId from "../middleware/validateMongoId.middleware";
 
 
 
@@ -37,8 +38,8 @@ const router = express.Router()
  *                  
  *            
  */
-router.get('/v1/movies', validateInput(LoginUserSchema), authUser, listOfAllMovies);
-
+router.get('/v1/movies', authUser, validateInput(LoginUserSchema), listOfAllMovies);
+//  validateInput(LoginUserSchema),
 /**
  *  @openapi
  *  '/api/v1/movies/{id}':
@@ -57,7 +58,7 @@ router.get('/v1/movies', validateInput(LoginUserSchema), authUser, listOfAllMovi
  *          200:
  *              desctription: Succes.
  */
-router.get('/v1/movies/:id', validateInput(MovieDetailsSchema), authUser, movieDetails);
+router.get('/v1/movies/:id', validateInput(MovieDetailsSchema), checkValidMongoId ,authUser, movieDetails);
 
 
 

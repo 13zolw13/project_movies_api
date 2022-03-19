@@ -6,7 +6,7 @@ import {
 import { CustomError, ErrorStatus } from "../models/custom-error.models";
 
 
-const authUser = (req: Request, res: Response, next: NextFunction) => {
+export const authUser = (req: Request, res: Response, next: NextFunction) => {
     // async
     const {
         token
@@ -21,4 +21,4 @@ const authUser = (req: Request, res: Response, next: NextFunction) => {
     return next();
 }
 
-export default authUser;
+// export  authUser;

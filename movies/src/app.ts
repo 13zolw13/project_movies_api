@@ -1,9 +1,12 @@
-require('dotenv').config()
+import 'reflect-metadata';
 
+require('dotenv').config();
+import { } from '../config/default'
 import swaggerUI from 'swagger-ui-express';
 import express, {
     Request,
-    Response
+    Response,
+    urlencoded
 } from "express";
 import connectDb from "./utils/connectToDb";
 import Routes from './routes/index.routes';
@@ -19,7 +22,6 @@ import handleError from './middleware/error.middleware';
 import { CustomError } from './models/custom-error.models';
 
 
-
 const app = express();
 
 
@@ -30,6 +32,7 @@ const dbUri = config.get<string>("dbUri");
 const cookieKey = config.get<string>("cookieKey")
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookieParser(cookieKey));
 app.use(authenticateUser);

@@ -21,8 +21,8 @@ services:
     volumes:
       - /authentication
     environment:
-      # JWT_SECRET: 'blabla'
-      JWT_SECRET: ${JWT_SECRET}
+      JWT_SECRET: 'blabla'
+      # JWT_SECRET: ${JWT_SECRET}
 
   movies:
     container_name: movies
@@ -39,11 +39,12 @@ services:
     depends_on:
       - auth
     environment:
-      JWT_SECRET: ${JWT_SECRET}
-      # JWT_SECRET: 'blabla'
+      # JWT_SECRET: ${JWT_SECRET}
+      JWT_SECRET: 'blabla'
       DB_URI: 'mongodb://mongo:27017/moviesDb'
-      OMDB_KEY: ${OMDB_KEY}
-      COOKIE_KEY: ${COOKIE_KEY}
+      # OMDB_KEY: ${OMDB_KEY}
+      COOKIE_KEY: "dasddas"
+      # COOKIE_KEY: ${COOKIE_KEY}
 networks:
   my-network:
     driver: bridge

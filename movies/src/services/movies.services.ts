@@ -1,7 +1,8 @@
 import config from 'config';
-import MovieModel, {
-    UserJWT
-} from '../models/movie.models';
+import {
+    CustomError
+} from '../models/custom-error.models';
+import MovieModel from '../models/movie.models';
 import DateforDb from '../utils/getDate';
 
 import log from '../utils/logger';
@@ -9,70 +10,76 @@ import {
     getMovie
 } from './omdbApi.services';
 
-const hideDetails = ["-_id", "-__v", "-createdAt", "-updatedAt", "-AddedBy"];
-const shortDetails = [",-Plot", "-Actors", "-Runtime", "-Awards"];
 
+export async function getAllMovies(userId: number) {
 
+    try {
+        const data = await MovieModel.findMoviesAddedByUser(userId)
+        return data;
+    } catch (error: any) {
+        log.error(error.message, 'Something went wrong');
 
-export function getAllMovies(userId: number) {
-    const whatToHide = (hideDetails.join(',') + shortDetails.join(',')).split(",");
-    log.info(whatToHide, 'What to hide')
-    return MovieModel.find({
-        AddedBy: userId
-    }).select(whatToHide)
+        throw new CustomError(400, 'Something went wrong ', error.message)
+    }
+
 }
 
-export function findMovieById(movieId: string) {
-    const whatToHide = hideDetails;
-    return MovieModel.find({
-        _id: movieId
-    }).select(whatToHide);
+export async function findMovieById(movieId: string, userId: number) {
+    try {
+        const data = await MovieModel.findMovieDetails(movieId, userId);
+        return data;
+
+    } catch (error: any) {
+        throw new CustomError(403, 'No movie data', error.message)
+    }
+
 }
 
 
 export async function checkHowManyAdded(userId: number): Promise<boolean> {
 
     let queryDate = DateforDb();
-    let limitBasic = config.get<number>("limitBasic")
+    let limitBasic = config.get<number>("limitBasic");
     log.info(limitBasic, 'Set limit for basic user');
-    const Movies = await MovieModel.find({
-        AddedBy: userId,
-        createdAt: {
-            $gte: queryDate
+
+    try {
+        const HowManyMoviesAdded = await MovieModel.checkHowManyMovies(userId, queryDate);
+        console.log(HowManyMoviesAdded.length, 'How many movies are added by user');
+
+        if (HowManyMoviesAdded.length < (limitBasic)) {
+            return true;
         }
-    });
-
-    if (Movies.length < limitBasic) {
-        return true;
-
+        return false
+    } catch (error: any) {
+        log.error(error.message, 'Something went wrong');
+        throw new CustomError(400, 'Something went wrong ', error.message)
     }
-    return false
 }
 
 
-export async function termsForAddingMovie(User: UserJWT, title: string) {
+export async function termsForAddingMovie(userId: number, userRole: string, title: string) {
 
-    const howMany = await checkHowManyAdded(User.userId);
-    log.info(howMany, 'check how many if less then limit returns true');
+    try {
 
-    if (User.role === 'premium' || howMany) {
-        log.info('User premium or less then five');
+        const howMany = await checkHowManyAdded(userId);
 
-        const existingMovie = await MovieModel.find({
-            Title: {
-                $regex: title,
-                $options: 'i'
-            },
-            AddedBy: User.userId
-        });
+        if (userRole === 'premium' || howMany) {
 
-        log.info(existingMovie.length, 'length array of the same movies',)
-        if (existingMovie.length < 1) {
-            log.info(existingMovie, 'Movie with the same title doesnt exists on users list');
-            return await getMovie(title);
+            const existingMovie = await MovieModel.checkIfArleadyExists(title, userId);
+            log.info(title, 'Searching if arleady exists');
+            log.info(existingMovie, 'length array of the same movies');
 
-        }
+            if (!existingMovie) {
+                log.info(existingMovie, 'Movie with the same title doesnt exists on users list');
+                return await getMovie(title);
+            }
+            return null;
+        };
 
+        return null;
+    } catch (error: any) {
+        log.error(error.message, 'Something went wrong');
+        throw new CustomError(400, 'Movie cannot be added', error.message)
     }
-    return;
+
 }
