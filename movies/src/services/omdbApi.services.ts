@@ -1,43 +1,32 @@
 require('dotenv').config();
-import axios from 'axios';
-import config from 'config';
+import axios from "axios";
+import config from "config";
 import { CustomError } from "../models/custom-error.models";
-import { MovieDetails } from "../models/movie.models";
+import { IOmdbDto } from "../models/inputOmdb.dto";
+import { MovieDetails } from "../models/MovieDetails";
 import log from "../utils/logger";
-
+import { mappingMovieFromOMDB } from "./mappingMovieFromOMDB";
 
 export async function getMovie(title: string): Promise<MovieDetails | null> {
-    const apikey = <string>process.env.OMDB_KEY || config.get<string>("omdb_key");
+	try {
+		const apikey = config.get<string>("omdb_key");
 
-    const apiUrl = config.get<string>("apiUrl");
-    const url = apiUrl + title + '&apikey=' + apikey;
-    console.log(url, "Url");
+		const apiUrl = config.get<string>("apiUrl");
+		const url = apiUrl + title + "&apikey=" + apikey;
+		const data = await axios.get(url);
+		const movieInfo = data.data as IOmdbDto;
 
-    try {
-        const {
-            data: movieInfo
-        } = await axios.get(url)
+		if (movieInfo.Response !== "False") {
+			log.info(movieInfo, "movie info from axios");
+			const movie: MovieDetails = mappingMovieFromOMDB(movieInfo);
+			log.info(movie, "movie movie input");
 
-        if (movieInfo.Response !== "False") {
-            log.info(movieInfo, 'movie info from axios')
-            const movie: MovieDetails = {
-                Title: movieInfo.Title,
-                Actors: movieInfo.Actors,
-                Director: movieInfo.Director,
-                Genre: movieInfo.Genre,
-                Released: movieInfo.Released,
-                Plot: movieInfo.Plot,
-                Runtime: movieInfo.Runtime,
-                Awards: movieInfo.Awards
-            };
-            log.info(movie, "movie movie input");
-
-            return movie;
-        }
-        return null;
-    } catch (error: any) {
-        log.error(error);
-        throw new CustomError(404, 'Not found', error.message)
-        return null;
-    }
+			return movie;
+		}
+		return null;
+	} catch (error: any) {
+		log.error(error);
+		throw new CustomError(404, "Not found", error.message);
+	}
 }
+
