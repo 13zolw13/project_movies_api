@@ -16,7 +16,7 @@ export function checkIdValid(id: string): boolean {
 const checkValidMongoId = (req:Request, res:Response, next:NextFunction) => {
     
     if(! checkIdValid(req.params.id)){
-        throw  new CustomError(400,'Wrond Id')
+        throw new CustomError(400, "Wrong Id");
     }
     
     return next();

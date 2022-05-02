@@ -1,23 +1,19 @@
-import { Request, Response, NextFunction } from 'express';
-import { CustomError } from '../models/custom-error.models';
-
+import { NextFunction, Request, Response } from "express";
+import { CustomError } from "../models/custom-error.models";
 
 function handleError(
-    err: TypeError | CustomError,
-    req: Request,
-    res: Response,
-    next: NextFunction
+	err: TypeError | CustomError,
+	req: Request,
+	res: Response,
+	next: NextFunction
 ) {
-    let customError = err;
+	let customError = err;
 
-    if (!(err instanceof CustomError)) {
-        customError = new CustomError(
-          
-        );
-    }
+	if (!(err instanceof CustomError)) {
+		customError = new CustomError();
+	}
 
-  
-    res.status((customError as CustomError).status).send(customError);
-};
+	res.status((customError as CustomError).status).send(customError);
+}
 
-export default handleError; 
+export default handleError;

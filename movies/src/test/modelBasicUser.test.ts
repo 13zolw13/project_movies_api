@@ -1,17 +1,15 @@
-import MovieModel, { Movie } from '../models/movie.models';
-import { mongoose } from '@typegoose/typegoose';
-import chai, { expect } from 'chai';
-import chaiHttp from 'chai-http';
-import connectDb from '../utils/connectToDb';
-import DateforDb from '../utils/getDate';
-import config from 'config';
-import { MockDataAddedPremiumAccount, MockDataBasicAccount } from './mockdata';
-import log from '../utils/logger';
+import chai, { expect } from "chai";
+import config from "config";
+import MovieModel from "../models/movie.models";
+import connectDb from "../utils/connectToDb";
+import DateforDb from "../utils/getDate";
+import log from "../utils/logger";
+import { MockDataBasicAccount } from "./mockdata";
 export const should = chai.should();
 
-
 // chai.use(chaiHttp);
-const dbUri = config.get<string>('dbUri') || 'mongodb://localhost:27017/movieApp';
+const dbUri =
+	config.get<string>("dbUri") || "mongodb://localhost:27017/movieApp";
 // const dbUri = config.get<string>('dbUri');
 
 // let movie = {
@@ -26,109 +24,93 @@ const dbUri = config.get<string>('dbUri') || 'mongodb://localhost:27017/movieApp
 //     Awards: "Nominated for 1 Oscar. 8 wins & 24 nominations total",
 // }
 
+describe("MovieModel, tests for lest ten limit ", function () {
+	before("Connecting to db", function () {
+		return connectDb(dbUri);
+	});
 
-describe('MovieModel, tests for lest ten limit ', function () {
+	beforeEach("Deleting model", function () {
+		return MovieModel.deleteMany();
+	});
+	beforeEach("Creating model", function () {
+		return MovieModel.create(MockDataBasicAccount.slice(0, 3));
+	});
 
+	describe("Function findMoviesAddedByUser =>", function () {
+		it("responds with one record", async function () {
+			const res = await MovieModel.findMoviesAddedByUser(123);
+			console.log(res[0]);
+			res.should.have.length(3);
+			res.should.be.an("array"); //.that.includes('Title');
+			res[0].should.be.an("object");
+			res[0].should.have.property("Title");
+			res[0].should.have.property("Director");
+			res[0].should.have.property("Released");
+			res[0].should.have.property("Genre");
+		});
+	});
 
-    before('Connecting to db', function () {
-        return connectDb(dbUri);
+	describe("Function MovieDetails =>", function () {
+		// console.log('movie', film)
+		it("Details of one movie", async function () {
+			const data = await MovieModel.findOne({
+				Title: "Jackie Brown",
+				AddedBy: 123,
+			});
+			console.log("movie data", data!.id);
+			// console.log('movie ', data._id);
+			expect(data!.id).to.be.a("string");
+			const res = await MovieModel.findMovieDetails(data!._id, 123);
+			console.log("second test", res);
+			// res.should.have.length(1);
+			// res.should.be.an('array');//.that.includes('Title');
+			res!.should.be.an("object");
+			res!.should.have.property("Title");
+			res!.should.have.property("Director");
+			res!.should.have.property("Released");
+			res!.should.have.property("Genre");
+			res!.should.have.property("Plot");
+			res!.should.have.property("Actors");
+			res!.should.have.property("Awards");
+		});
+	});
 
-    })
+	describe("Function  checkHowManyMovies=>", function () {
+		// console.log('movie', film)
+		it("How many added by user", async function () {
+			const month = DateforDb();
+			const res = await MovieModel.checkHowManyMovies(123, month);
+			const howManyAddedThisMonth = res!.length;
+			console.log("second test", res);
+			// res.should.have.length(1);
+			// res.should.be.an('array');//.that.includes('Title');
+			howManyAddedThisMonth.should.be.equal(3);
+		});
+	});
 
-    beforeEach('Deleting model', function () {
-        return MovieModel.deleteMany();
+	describe("Function  checkIfArleadyExists=>", function () {
+		// console.log('movie', film)
+		it("checking if the movie exists", async function () {
+			const month = DateforDb();
+			const res = await MovieModel.checkIfAlreadyExists("Jackie", 123);
+			const one = await MovieModel.find({});
+			console.log("One=->", one);
+			log.info(res, "Data jackie brown");
 
-    });
-    beforeEach('Creating model', function () {
-        return MovieModel.create(MockDataBasicAccount.slice(0, 3));
-    });
+			expect(res).to.not.be.null;
+		});
+	});
 
+	describe("Function  checkIfArleadyExists=>", function () {
+		// console.log('movie', film)
+		it("Movie isn`t on user list already", async function () {
+			const month = DateforDb();
+			const res = await MovieModel.checkIfAlreadyExists("James", 123);
+			log.info(res, "Data");
+			expect(res).to.be.null;
 
-    describe('Function findMoviesAddedByUser =>', function () {
-        it('responds with one record', async function () {
-            const res = await MovieModel.findMoviesAddedByUser(123);
-            console.log(res[0]);
-            res.should.have.length(3);
-            res.should.be.an('array');//.that.includes('Title');
-            res[0].should.be.an('object');
-            res[0].should.have.property('Title');
-            res[0].should.have.property('Director');
-            res[0].should.have.property('Released');
-            res[0].should.have.property('Genre');
-        });
-    });
-
-    describe('Function MovieDetails =>', function () {
-
-        // console.log('movie', film)
-        it('Details of one movie', async function () {
-            const data = await MovieModel.findOne({ Title: "Jackie Brown", AddedBy: 123 })
-            console.log('movie data', data!.id);
-            // console.log('movie ', data._id);
-            expect(data!.id).to.be.a('string');
-            const res = await MovieModel.findMovieDetails(data!._id, 123);
-            console.log("second test", res);
-            // res.should.have.length(1);
-            // res.should.be.an('array');//.that.includes('Title');
-            res!.should.be.an('object');
-            res!.should.have.property('Title');
-            res!.should.have.property('Director');
-            res!.should.have.property('Released');
-            res!.should.have.property('Genre');
-            res!.should.have.property('Plot');
-            res!.should.have.property('Actors');
-            res!.should.have.property('Awards');
-
-        });
-    });
-
-    describe('Function  checkHowManyMovies=>', function () {
-
-        // console.log('movie', film)
-        it('How many added by user', async function () {
-            const month = DateforDb()
-            const res = await MovieModel.checkHowManyMovies(123, month);
-            const howManyAddedThisMonth = res!.length;
-            console.log("second test", res);
-            // res.should.have.length(1);
-            // res.should.be.an('array');//.that.includes('Title');
-            howManyAddedThisMonth.should.be.equal(3);
-
-        });
-    });
-
-    describe('Function  checkIfArleadyExists=>', function () {
-
-
-        // console.log('movie', film)
-        it('checking if the movie exists', async function () {
-            const month = DateforDb()
-            const res = await MovieModel.checkIfArleadyExists("Jackie", 123);
-            const one = await MovieModel.find({});
-            console.log("One=->", one);
-            log.info(res, 'Data jackie brown')
-
-            expect(res).to.not.be.null;
-
-
-        });
-    });
-
-    describe('Function  checkIfArleadyExists=>', function () {
-
-        // console.log('movie', film)
-        it('Movie isn`t on user list arleady', async function () {
-
-            const month = DateforDb()
-            const res = await MovieModel.checkIfArleadyExists("James", 123);
-            log.info(res, 'Data')
-            expect(res).to.be.null;
-
-            // res.should.have.length(1);
-            // res.should.be.an('array');//.that.includes('Title');
-
-        });
-    });
-
-
+			// res.should.have.length(1);
+			// res.should.be.an('array');//.that.includes('Title');
+		});
+	});
 });

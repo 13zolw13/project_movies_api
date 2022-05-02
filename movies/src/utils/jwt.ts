@@ -13,18 +13,13 @@ export function encodedUser<T>(token: string): UserJWT | null {
     log.info(token, ' auth middleware=> encodedUser token');
 
     try {
-
-
-        const data = jwt.verify(token, key!) as UserJWT;
-        log.info(data, ' auth middleware=> encodedUser data')
-        return data;
-    }
-
-
-    catch (error: any) {
-        log.error(error, 'Error',)
-        return null;
-    }
+			const data = jwt.verify(token, key!) as UserJWT;
+			log.info(data, " auth middleware=> encodedUser data");
+			return data;
+		} catch (error: any) {
+			log.error(error, "Error");
+			return null;
+		}
 
 }
 

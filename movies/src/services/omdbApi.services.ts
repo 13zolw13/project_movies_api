@@ -1,12 +1,10 @@
 require('dotenv').config();
 import axios from 'axios';
 import config from 'config';
-import { CustomError } from '../models/custom-error.models';
+import { CustomError } from "../models/custom-error.models";
+import { MovieDetails } from "../models/movie.models";
+import log from "../utils/logger";
 
-import {
-    MovieDetails
-} from '../models/movie.models';
-import log from '../utils/logger';
 
 export async function getMovie(title: string): Promise<MovieDetails | null> {
     const apikey = <string>process.env.OMDB_KEY || config.get<string>("omdb_key");
@@ -32,7 +30,7 @@ export async function getMovie(title: string): Promise<MovieDetails | null> {
                 Runtime: movieInfo.Runtime,
                 Awards: movieInfo.Awards
             };
-            log.info(movie, 'movie movieinput');
+            log.info(movie, "movie movie input");
 
             return movie;
         }

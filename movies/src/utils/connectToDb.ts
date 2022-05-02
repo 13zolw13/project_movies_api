@@ -5,7 +5,7 @@ function connectDb(dbUri: string) {
 
 
     try {
-        console.log("connecting to db");
+        log.info("Connecting to db");
         return mongoose.connect(dbUri);
 
     }

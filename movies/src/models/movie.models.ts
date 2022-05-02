@@ -1,12 +1,10 @@
 import {
-    getModelForClass,
-    modelOptions,
-    pre,
-    prop,
-    ReturnModelType, DocumentType
+	getModelForClass,
+	modelOptions,
+	pre,
+	prop,
+	ReturnModelType,
 } from "@typegoose/typegoose";
-import { logger } from "@typegoose/typegoose/lib/logSettings";
-import { Container, Service } from 'typedi';
 import { hideDetails, shortDetails } from '../data/hidedata';
 
 
@@ -113,7 +111,7 @@ export class Movie {
 
     }
 
-    public static async checkIfArleadyExists(this: ReturnModelType<typeof Movie>, title: string, UserId: number) {
+    public static async checkIfAlreadyExists(this: ReturnModelType<typeof Movie>, title: string, UserId: number) {
 
         return await this.findOne({
             Title: {

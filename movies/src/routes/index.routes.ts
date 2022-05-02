@@ -32,20 +32,16 @@ router.use('/healtcheck', (req: Request, res: Response) => {
  *                      $ref: '#/components/schemas/LoginInput'
  *      responses:
  *           404:
- *               desctription: Porduct doesnt exists
+ *               descriptions: Product doesn't exists
  *           200:
- *               desctription: Succes.
+ *               description: Success.
  *           401:
- *               desctription: User not auth.
+ *               description: User not auth.
  * 
  *                  
  *            
  */
-router.post('/v1/login',validateInput(LoginSchema), loginUser)
-
+router.post("/v1/login", validateInput(LoginSchema), loginUser);
 router.use(moviesRoutes);
-
-
-
 
 export default router

@@ -1,13 +1,17 @@
 export class CustomError {
-    message!: string;
-    status!: number;
-    additionalInfo!: any;
-    // collection = [{ status: 400, msg: 'messages' }, { status: 403, msg: 'messages' }, { status: 404, msg: 'messages' }]
-    constructor(status: number = 500, message: string = 'Somethin went wrong', additionalInfo: any = {}) {
-        this.message = message;
-        this.status = status;
-        this.additionalInfo = additionalInfo;
-    }
+	message!: string;
+	status!: number;
+	additionalInfo!: any;
+	// collection = [{ status: 400, msg: 'messages' }, { status: 403, msg: 'messages' }, { status: 404, msg: 'messages' }]
+	constructor(
+		status: number = 500,
+		message: string = "Something went wrong",
+		additionalInfo: any = {}
+	) {
+		this.message = message;
+		this.status = status;
+		this.additionalInfo = additionalInfo;
+	}
 }
 
 export enum ErrorStatus {
