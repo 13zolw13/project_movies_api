@@ -14,13 +14,11 @@ export async function listOfAllMovies(
 	req: Request,
 	res: Response<{}, LoginUserInput>
 ) {
-	const User = res.locals.user;
-
-	if (!User) {
+	if (!res.locals.user) {
 		return res.status(403).send("No movies in DB");
 	}
-	log.info(User, " ListOfALLMovies ->User");
-	const movies = await getAllMovies(User.userId);
+	log.info(res.locals.user, " ListOfALLMovies ->User");
+	const movies = await getAllMovies(res.locals.user);
 	log.info(movies, " ListOfALLMovies -> all movies added by a user");
 
 	if (!movies) {
@@ -71,10 +69,10 @@ export async function addMovie(
 		});
 
 		return res.status(201).send({
-			msg: "Movie succesfully added to db",
+			msg: "Movie successfully added to db",
 			movie,
 		});
 	} catch (error: any) {
-		throw new CustomError(404, "Somethin went wrong", error.message);
+		throw new CustomError(404, "Something went wrong", error.message);
 	}
 }

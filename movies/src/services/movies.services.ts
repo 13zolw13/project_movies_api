@@ -1,15 +1,13 @@
 import config from 'config';
-import {
-    CustomError
-} from '../models/custom-error.models';
-import MovieModel from '../models/movie.models';
-import DateforDb from "../utils/getDate";
+import { CustomError } from "../models/custom-error.models";
+import MovieModel, { UserJWT } from "../models/movie.models";
+import getQueryPeriodDate from "../utils/getDate";
 import log from "../utils/logger";
 import { getMovie } from "./omdbApi.services";
 
-export async function getAllMovies(userId: number) {
+export async function getAllMovies(User: UserJWT) {
 	try {
-		const data = await MovieModel.findMoviesAddedByUser(userId);
+		const data = await MovieModel.findMoviesAddedByUser(User.userId);
 		return data;
 	} catch (error: any) {
 		log.error(error.message, "Something went wrong");
@@ -28,7 +26,7 @@ export async function findMovieById(movieId: string, userId: number) {
 }
 
 export async function checkHowManyAdded(userId: number): Promise<boolean> {
-	let queryDate = DateforDb();
+	let queryDate = getQueryPeriodDate();
 	let limitBasic = config.get<number>("limitBasic");
 	log.info(limitBasic, "Set limit for basic user");
 
@@ -37,7 +35,7 @@ export async function checkHowManyAdded(userId: number): Promise<boolean> {
 			userId,
 			queryDate
 		);
-		console.log(HowManyMoviesAdded.length, "How many movies are added by user");
+		log.info(HowManyMoviesAdded.length, "How many movies are added by user");
 
 		if (HowManyMoviesAdded.length < limitBasic) {
 			return true;
