@@ -1,3 +1,5 @@
+import { UserJWT } from "../models/movie.models";
+
 export const MockDataBasicAccount = [{
         Title: "Jackie Brown",
         Director: "Quentin Tarantino",
@@ -150,3 +152,22 @@ export const MockDataAddedPremiumAccount = [{
 
 
 
+export const fakeUserBasic: UserJWT = {
+	userId: 123,
+	role: "basic",
+	name: "",
+	iat: 0,
+	exp: 0,
+	iss: "",
+	sub: "",
+};
+
+export const fakeUserPremium: UserJWT = {
+	userId: 123,
+	role: "premium",
+	name: "",
+	iat: 0,
+	exp: 0,
+	iss: "",
+	sub: "",
+};

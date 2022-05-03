@@ -3,7 +3,7 @@ import config from "config";
 import MovieModel from "../models/movie.models";
 import { checkHowManyAdded, getAllMovies } from "../services/movies.services";
 import connectDb from "../utils/connectToDb";
-import { MockDataAddedPremiumAccount } from "./mockdata";
+import { fakeUserPremium, MockDataAddedPremiumAccount } from "./mockdata";
 
 export const should = chai.should();
 
@@ -28,7 +28,7 @@ describe("Movie service tests. For premium User. Movies created less then limit"
 
 	describe("Function getAllMovies =>", function () {
 		it("responds with list of all movies created by user", async function () {
-			const res = await getAllMovies(434);
+			const res = await getAllMovies(fakeUserPremium);
 			// console.log(res[0]);
 			res.should.have.length(3);
 			res.should.be.an("array"); //.that.includes('Title');
@@ -42,7 +42,7 @@ describe("Movie service tests. For premium User. Movies created less then limit"
 
 	describe("Function getAllMovies =>", function () {
 		it("responds with empty list of all movies created by user", async function () {
-			const res = await getAllMovies(124);
+			const res = await getAllMovies(fakeUserPremium);
 			// console.log(res[0]);
 			res.should.have.length(0);
 			res.should.be.an("array");
@@ -72,7 +72,7 @@ describe("Movie service tests. For premium User. Movies created less then limit"
 
 	describe("Function getAllMovies =>", function () {
 		it("responds with list of all movies created by user", async function () {
-			const res = await getAllMovies(434);
+			const res = await getAllMovies(fakeUserPremium);
 			// console.log(res[0]);
 			expect(res).to.have.lengthOf.at.least(2);
 			expect(res).not.to.be.undefined;

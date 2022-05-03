@@ -1,9 +1,9 @@
 import chai, { expect } from "chai";
 import config from "config";
-import MovieModel from "../models/movie.models";
+import MovieModel, { UserJWT } from "../models/movie.models";
 import { checkHowManyAdded, getAllMovies } from "../services/movies.services";
 import connectDb from "../utils/connectToDb";
-import { MockDataBasicAccount } from "./mockdata";
+import { fakeUser, MockDataBasicAccount } from "./mockdata";
 
 export const should = chai.should();
 
@@ -13,6 +13,7 @@ const dbUri =
 // const dbUri = config.get<string>('dbUri');
 let userId = 123;
 let userRole = "basic";
+
 
 describe("Movie service tests", function () {
 	before("Connecting to db", function () {
@@ -28,7 +29,7 @@ describe("Movie service tests", function () {
 
 	describe("Function getAllMovies =>", function () {
 		it("responds with list of all movies created by user", async function () {
-			const res = await getAllMovies(123);
+			const res = await getAllMovies(fakeUser);
 			// console.log(res[0]);
 			res.should.have.length(3);
 			res.should.be.an("array"); //.that.includes('Title');
@@ -42,7 +43,7 @@ describe("Movie service tests", function () {
 
 	describe("Function getAllMovies =>", function () {
 		it("responds with empty list of all movies created by user", async function () {
-			const res = await getAllMovies(124);
+			const res = await getAllMovies(fakeUser);
 			// console.log(res[0]);
 			res.should.have.length(0);
 			res.should.be.an("array");
@@ -72,7 +73,7 @@ describe("Movie service tests. Basic user. More movies created in db", function 
 
 	describe("Function getAllMovies =>", function () {
 		it("responds with list of all movies created by user", async function () {
-			const res = await getAllMovies(123);
+			const res = await getAllMovies(fakeUser);
 			// console.log(res[0]);
 			res.should.have.length.above(3);
 			res.should.be.an("array"); //.that.includes('Title');
@@ -86,7 +87,7 @@ describe("Movie service tests. Basic user. More movies created in db", function 
 
 	describe("Function getAllMovies =>", function () {
 		it("responds with empty list of all movies created by user", async function () {
-			const res = await getAllMovies(124);
+			const res = await getAllMovies(fakeUser);
 			// console.log(res[0]);
 			res.should.have.length(0);
 			res.should.be.an("array");
