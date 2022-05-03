@@ -5,12 +5,12 @@ import log from "./logger";
 
 
 export function encodedUser<T>(token: string): UserJWT | null {
-
+try {
     const key = config.get<string>('jwt')
     log.info(key, ' auth middleware=> encodedUser key')
     log.info(token, ' auth middleware=> encodedUser token');
 
-    try {
+    
 			const data = jwt.verify(token, key!) as UserJWT;
 			log.info(data, " auth middleware=> encodedUser data");
 			return data;
