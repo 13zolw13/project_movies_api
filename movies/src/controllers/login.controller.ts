@@ -10,13 +10,7 @@ import {
 } from "../services/getUser.service";
 import log from "../utils/logger";
 export async function loginUser(req: Request < {}, {},LoginInput > , res: Response) {
-    const {
-
-        username,
-        password
-    } = req.body;
-
-    const token = await getAuthUser(username, password)
+    const token = await getAuthUser(req.body);
 
     if (!token) {
         res.locals.user = '';
