@@ -1,23 +1,12 @@
 import {
-    getModelForClass,
-    modelOptions,
-    pre,
-    ReturnModelType
+	getModelForClass,
+	modelOptions,
+	pre,
+	ReturnModelType,
 } from "@typegoose/typegoose";
 import { hideDetails, shortDetails } from '../data/hidedata';
 import { Movie } from "./Movie.entity";
 
-
-export interface UserJWT {
-    userId: number,
-    name: string,
-    role: string,
-    iat: number,
-    exp: number,
-    iss: string,
-    sub: string,
-
-}
 
 @pre<MovieService>("save", function () {
 	const date = new Date(this.Released);

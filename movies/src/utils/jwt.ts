@@ -1,8 +1,6 @@
 import config from "config";
 import jwt from "jsonwebtoken";
-import {
-    UserJWT
-} from "../models/movie.models";
+import { UserJWT } from "../models/UserJWT";
 import log from "./logger";
 
 

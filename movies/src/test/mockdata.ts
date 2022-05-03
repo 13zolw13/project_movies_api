@@ -1,4 +1,4 @@
-import { UserJWT } from "../models/movie.models";
+import { UserJWT } from "../models/UserJWT";
 
 export const MockDataBasicAccount = [{
         Title: "Jackie Brown",

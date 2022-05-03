@@ -1,6 +1,7 @@
 import config from 'config';
 import { CustomError } from "../models/custom-error.models";
-import MovieModel, { UserJWT } from "../models/movie.models";
+import MovieModel from "../models/movie.models";
+import { UserJWT } from "../models/UserJWT";
 import getQueryPeriodDate from "../utils/getDate";
 import log from "../utils/logger";
 import { getMovie } from "./omdbApi.services";
