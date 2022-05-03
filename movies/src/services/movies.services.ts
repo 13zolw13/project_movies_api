@@ -5,6 +5,7 @@ import getQueryPeriodDate from "../utils/getDate";
 import log from "../utils/logger";
 import { getMovie } from "./omdbApi.services";
 
+
 export async function getAllMovies(User: UserJWT) {
 	try {
 		const data = await MovieModel.findMoviesAddedByUser(User.userId);
