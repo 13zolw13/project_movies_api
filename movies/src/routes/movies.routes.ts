@@ -1,8 +1,8 @@
 import express from "express";
 import {
-    addMovie,
-    listOfAllMovies,
-    movieDetails
+	addMovie,
+	listOfAllMovies,
+	movieDetails,
 } from "../controllers/movies.controller";
 import { authUser } from "../middleware/User.middleware";
 import validateInput from "../middleware/validateInput.middleware";
@@ -20,9 +20,9 @@ const router = express.Router();
  *      summary: Endpoint for list of all movies added by auth users.
  *      responses:
  *           404:
- *               desctription: Porduct doesnt exists
+ *               description: Product doesn't exists
  *           200:
- *               desctription: Succes.
+ *               description: Success.
  *               schema:
  *                type: array
  *                items:
@@ -88,7 +88,7 @@ router.get(
  *           404:
  *               description: Product doesn't exists
  *           200:
- *               description: Succes.
+ *               description: Success.
  *               schema:
  *                type: array
  *                items:
@@ -100,7 +100,7 @@ router.get(
  *                    Genre: string
  *                    AddedBy: string
  *           401:
- *               desctription: User not auth.
+ *               description: User not auth.
  *
  *
  *
