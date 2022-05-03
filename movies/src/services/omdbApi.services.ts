@@ -10,8 +10,8 @@ import { mappingMovieFromOMDB } from "./mappingMovieFromOMDB";
 export async function getMovie(title: string): Promise<MovieDetails | null> {
 	try {
 		const apikey = config.get<string>("omdb_key");
-
 		const apiUrl = config.get<string>("apiUrl");
+		
 		const url = apiUrl + title + "&apikey=" + apikey;
 		const data = await axios.get(url);
 		const movieInfo = data.data as IOmdbDto;

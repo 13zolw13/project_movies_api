@@ -1,12 +1,10 @@
 
-function DateforDb(): string {
-    let date = new Date();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
+function getQueryPeriodDate(): string {
+	let date = new Date();
+	let month = date.getMonth() + 1;
+	let year = date.getFullYear();
 
-    return year + '-' + month + '-01';
-
-
+	return year + "-" + month + "-01";
 }
 
-export default DateforDb;
+export default getQueryPeriodDate;
