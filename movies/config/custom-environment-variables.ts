@@ -1,7 +1,7 @@
+require("dotenv").config();
 export default {
-    dbUri: "DB_URI",
-    omdb_key: "OMDB_KEY",
-    jwt: 'JWT_SECRET',
-    cookieKey: "COOKIE_KEY",
+	dbUri: process.env.DB_URI,
+	omdb_key: process.env.OMDB_KEY,
+	jwt: process.env.JWT_SECRET,
+	cookieKey: process.env.COOKIE_KEY,
 };
-
